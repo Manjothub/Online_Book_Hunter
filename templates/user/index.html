@@ -1,0 +1,62 @@
+{% extends "common/base.html" %}
+{% load static %}
+{% block title %} Book Shop {% endblock title %}
+{% block body %}
+  <!-- Start Header Area -->
+<header class="header_area sticky-header">
+    {% include "includes/header.html" %}
+</header>
+<!-- End Header Area -->
+
+<!-- start banner Area -->
+<section class="banner-area">
+    {% include "includes/banner.html" %}
+</section>
+<!-- End banner Area -->
+
+<!-- start features Area -->
+<section class="features-area section_gap">
+    {% include "includes/features.html" %}
+</section>
+<!-- end features Area -->
+
+<!-- Start category Area -->
+<section class="category-area">
+    {% include "includes/category.html" %}
+</section>
+<!-- End category Area -->
+
+<!-- start product Area -->
+<section class="owl-carousel active-product-area section_gap">
+    <!-- single product slide -->
+    <div class="single-product-slider">
+        {% include "includes/books.html" %}
+    </div>
+    <!-- Upcoming Books slide -->
+</section>
+<!-- end product Area -->
+
+<!-- Start exclusive deal Area -->
+<section class="exclusive-deal-area">
+    {% include "includes/exclusive.html" %}
+</section>
+<!-- End exclusive deal Area -->
+
+<!-- Start brand Area -->
+<section class="brand-area section_gap">
+    {% include "includes/brands.html" %}
+</section>
+<!-- End brand Area -->
+
+<!-- Start related-product Area -->
+<section class="related-product-area section_gap_bottom">
+    {% include "includes/deals.html" %}
+</section>
+<!-- End related-product Area -->
+
+<!-- start footer Area -->
+<footer class="footer-area section_gap">
+    {% include "includes/footer.html" %}
+</footer>
+<!-- End footer Area -->
+{% endblock body %}
