@@ -1,0 +1,52 @@
+{% load static %}
+<div class="sidebar-menu">
+    <div class="sidebar-header">
+        <div class="logo">
+            <a href="#"><img src="{% static 'images/dashboardlogo.jpg' %}" alt="logo" width="100px"></a>
+        </div>
+    </div>
+    <div class="main-menu">
+        <div class="menu-inner">
+            <nav>
+                <ul class="metismenu" id="menu">
+                    <li class="active">
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Books</span></a>
+                        <ul class="collapse">
+                            <li><a href="#">Book List</a></li>
+                            <li><a href="{% url 'addbook' %}">Add Book</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Authors</span></a>
+                        <ul class="collapse">
+                            <li><a href="#">Authors List</a></li>
+                            <li><a href="#">Add Author</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Categories</span></a>
+                        <ul class="collapse">
+                            <li><a href="#">Categories List</a></li>
+                            <li><a href="#">Add Categories</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Languages</span></a>
+                        <ul class="collapse">
+                            <li><a href="#">Add Languages</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Manage Users</span></a>
+                        <ul class="collapse">
+                            <li><a href="#">Users List</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

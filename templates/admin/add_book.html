@@ -1,0 +1,147 @@
+{% include "admin/admin_dashboard.html" %}
+{% load static %}
+{% block css %} <link rel="stylesheet" href="{% static 'css/addbook.css' %}"> {% endblock css %}
+{% block body %}
+<div class="container">
+    <header class="header">
+      <h1 id="title" class="text-center">Add Book</h1>
+    </header>
+    <form id="survey-form">
+      <div class="form-group">
+        <label id="name-label" for="name">Name <span style="color: #ff0000;" >*</span></label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          class="form-control"
+          placeholder="Like: Mohammad"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label id="email-label" for="email">Email<span style="color: #ff0000;" >*</span></label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="form-control"
+          placeholder="Like: mhmmd.rezaei4@gmail.com"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label id="number-label" for="number"
+          >Age<span class="clue">(optional)</span></label
+        >
+        <input
+          type="number"
+          name="age"
+          id="number"
+          min="10"
+          max="99"
+          class="form-control"
+          placeholder="Age"
+        />
+      </div>
+      <div class="form-group">
+        <p>What is your most Favourite food?<span style="color: #ff0000;" >*</span></p>
+        <select id="dropdown" name="role" class="form-control" required>
+          <option disabled selected value>Select current role</option>
+          <option value="Pasta">Pasta</option>
+          <option value="pizza">pizza</option>
+          <option value="Chicken">Chicken</option>
+          <option value="Rice">Rice</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <p>What is the best sport?</p>
+        <label>
+          <input
+            name="user-recommend"
+            value="definitely"
+            type="radio"
+            class="input-radio"
+            checked
+          />Soccer</label
+        >
+        <label>
+          <input
+            name="user-recommend"
+            value="maybe"
+            type="radio"
+            class="input-radio"
+          />Cricket</label
+        >
+  
+        <label
+          ><input
+            name="user-recommend"
+            value="not-sure"
+            type="radio"
+            class="input-radio"
+          />Hockey</label
+        >
+      </div>
+  
+      <div class="form-group">
+        <p>
+            Which brand of laptop is most reliable?
+        </p>
+        <select id="most-like" name="mostLike" class="form-control" required>
+          <option disabled selected value>Select an option</option>
+          <option value="apple">apple</option>
+          <option value="lenova">lenova</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <p>
+            Which team is the best in the world in 2021?
+          <span class="clue">(Check all that apply)</span>
+        </p>
+  
+        <label
+          ><input
+            name="prefer"
+            value="Belgium"
+            type="checkbox"
+            class="input-checkbox"
+          />Belgium</label
+        >
+        <label>
+          <input
+            name="prefer"
+            value="Brazil"
+            type="checkbox"
+            class="input-checkbox"
+          />Brazil</label
+        >
+        <label
+          ><input
+            name="prefer"
+            value="France"
+            type="checkbox"
+            class="input-checkbox"
+          />France</label
+        >
+      </div>
+  
+      <div class="form-group">
+        <p>Any comments or suggestions?</p>
+        <textarea
+          id="comments"
+          class="input-textarea"
+          name="comment"
+          placeholder="Enter your comment here..."
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" id="submit" class="submit-button">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+{% endblock body %}
+    

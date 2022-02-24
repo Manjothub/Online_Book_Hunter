@@ -1,48 +1,69 @@
+{% load static %}
 <div class="container">
-    <div class="row fullscreen align-items-center justify-content-start">
-        <div class="col-lg-12">
-            <div class="active-banner-slider owl-carousel">
-                <!-- single-slide -->
-                <div class="row single-slide align-items-center d-flex">
-                    <div class="col-lg-5 col-md-6">
-                        <div class="banner-content">
-                            <h1>Nike New <br>Collection!</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et
-                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                            <div class="add-bag d-flex align-items-center">
-                                <a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
-                                <span class="add-text text-uppercase">Add to Bag</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="banner-img">
-                            <img class="img-fluid" src="img/banner/banner-img.png" alt="">
-                        </div>
-                    </div>
-                </div>
-                <!-- single-slide -->
-                <div class="row single-slide">
-                    <div class="col-lg-5">
-                        <div class="banner-content">
-                            <h1>Nike New <br>Collection!</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et
-                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                            <div class="add-bag d-flex align-items-center">
-                                <a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
-                                <span class="add-text text-uppercase">Add to Bag</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="banner-img">
-                            <img class="img-fluid" src="img/banner/banner-img.png" alt="">
-                        </div>
-                    </div>
-                </div>
+  <div class="row fullscreen align-items-center justify-content-start">
+    <div class="col-lg-12">
+      <div class="active-banner-slider owl-carousel">
+        <!-- single-slide -->
+        <div class="row single-slide align-items-center d-flex">
+          <div class="col-lg-5 col-md-6">
+            <div class="banner-content">
+              <h1>Autobiography <br />Collection!</h1>
+              <p>
+                'The Wings of Fire' was first published in the year 2000.
+                Mr Tiwari is a well-known missile scientist who has worked with
+                Dr. Kalam. Having become a bestseller, the book has even been
+                translated into thirteen languages, which includes Chinese and
+                French.
+              </p>
+              <div class="add-bag d-flex align-items-center">
+                <a class="add-btn" href=""
+                  ><span class="lnr lnr-cross"></span
+                ></a>
+                <span class="add-text text-uppercase">Add to Bag</span>
+              </div>
             </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="banner-img">
+              <img
+                class="img-fluid"
+                src="{% static 'images/banner_img1.jpg' %}"
+                alt=""
+              />
+            </div>
+          </div>
         </div>
+        <!-- single-slide -->
+        <div class="row single-slide">
+          <div class="col-lg-5" style="margin-top: 23%">
+            <div class="banner-content">
+              <h1>Autobiography<br />Collection!</h1>
+              <p>
+                An international bestseller which has sold over a million copies
+                in the UK, Dreams From My Father is a refreshing, revealing
+                portrait of a young man asking big questions about identity and
+                belonging.
+              </p>
+              <div class="add-bag d-flex align-items-center">
+                <a class="add-btn" href=""
+                  ><span class="lnr lnr-cross"></span
+                ></a>
+                <span class="add-text text-uppercase">Add to Bag</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="banner-img">
+              <!-- <img class="img-fluid" src="{% static 'img/banner/banner-img.png' %}" alt=""> -->
+              <img
+                class="img-fluid"
+                src="{% static 'images/banner_img2.jpg' %}"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
