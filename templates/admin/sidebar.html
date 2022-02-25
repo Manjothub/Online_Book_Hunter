@@ -15,28 +15,20 @@
                     <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Books</span></a>
                         <ul class="collapse">
-                            <li><a href="#">Book List</a></li>
+                            <li><a href="{% url 'viewbook' %}">Book List</a></li>
                             <li><a href="{% url 'addbook' %}">Add Book</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Authors</span></a>
                         <ul class="collapse">
-                            <li><a href="#">Authors List</a></li>
-                            <li><a href="#">Add Author</a></li>
+                            <li><a href="{% url 'viewauthor' %}">Authors List</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Categories</span></a>
                         <ul class="collapse">
-                            <li><a href="#">Categories List</a></li>
-                            <li><a href="#">Add Categories</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Languages</span></a>
-                        <ul class="collapse">
-                            <li><a href="#">Add Languages</a></li>
+                            <li><a href="{% url 'viewcategories' %}">Categories List</a></li>
                         </ul>
                     </li>
                     <li>

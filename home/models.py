@@ -12,11 +12,7 @@ class CustomUser(AbstractUser):
 
 
 class BookAuthor(models.Model):
-    admin = models.OneToOneField(CustomUser,on_delete = models.CASCADE)
-    author_bio = models.CharField(max_length=250,null=True)
-    author_gender = models.CharField(max_length=10)
-    author_dob = models.DateField(auto_now_add=False)
-    author_mobile_no = models.CharField(blank=False,max_length=10)
+    author_name = models.CharField(max_length = 50,null=True)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now_add=True)
     
@@ -26,7 +22,11 @@ class BookCategory(models.Model):
     
     
 class BookPrice(models.Model):
-    book_price= models.CharField(max_length=50)
+    price= models.CharField(max_length=50,null=True)
+    
+    def __str__(self):
+        return str(self.price)
+
     
 
 class BookLanguage(models.Model):
@@ -36,16 +36,19 @@ class BookLanguage(models.Model):
 class Book(models.Model):
     book_name = models.CharField(max_length=100,null=True)
     book_isbn = models.PositiveIntegerField()
-    book_publisher = models.ForeignKey(BookAuthor, on_delete=models.CASCADE,null=True)
-    book_language = models.ForeignKey(BookLanguage, on_delete=models.CASCADE,null=True)
+    publisher = models.ForeignKey(BookAuthor, on_delete=models.CASCADE,null=True)
+    text = models.ForeignKey(BookLanguage, on_delete=models.CASCADE,null=True)
     publication_date = models.DateField(auto_now=False,null=True)
     book_reading_age = models.CharField(max_length=100,null=True)
     book_weight = models.CharField(max_length=100,null=True)
     book_dimensions = models.CharField(max_length=100,null=True)
     book_origin = models.CharField(max_length=50,null=True)
-    book_category = models.ForeignKey(BookCategory,on_delete=models.CASCADE,null=True)
+    category = models.ForeignKey(BookCategory,on_delete=models.CASCADE,null=True)
     book_status = models.BooleanField(default= True)
     book_description = models.CharField(max_length=250, null=True)
     book_image = models.ImageField(upload_to = 'uploads/book-cover-images/',null=True,default="static/images/default-img.png")
     book_volume = models.CharField(max_length=50,null=True)
+    bookprice = models.ForeignKey(BookPrice,on_delete=models.CASCADE,null=True)
     
+    def __str__(self):
+        return str(self.book_name)

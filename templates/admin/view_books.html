@@ -1,0 +1,102 @@
+{% extends "admin/admin_dashboard.html" %} 
+{% load static %}
+{% block css %}
+<style>
+    .dataTables_wrapper .dataTables_filter input{ 
+height: 40px; 
+    }
+    .dataTables_wrapper .dataTables_filter{
+        margin-top: -35px;
+    }
+</style>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock css %}
+{% block body %}
+    <div class="row"> 
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h4 class="header-title">Book Information</h4>
+                <div class="data-tables datatable-dark">
+                    <table id="dataTable3" class="text-center">
+                        <thead class="text-capitalize">
+                            <tr>
+                                <th>Name</th>
+                                <th>ISBN</th>
+                                <th>Publisher</th>
+                                <th>Language</th>
+                                <th>Date</th>
+                                <th>Reading Age</th>
+                                <th>Weight</th>
+                                <th>Dimensions</th>
+                                <th>Origin</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Image</th>
+                                <th>Volume</th>
+                                <th>Price (Rs)</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in books %}
+                            <tr>
+                                <td>{{book.book_name}}</td>
+                                <td>{{book.book_isbn}}</td>
+                                <td>{{book.publisher.author_name}}</td>
+                                <td>{{book.text.language}}</td>
+                                <td>{{book.publication_date}}</td>
+                                <td>{{book.book_reading_age}}</td>
+                                <td>{{book.book_weight}}</td>
+                                <td>{{book.book_dimensions}}</td>
+                                <td>{{book.book_origin}}</td>
+                                <td>{{book.category.category_name}}</td>
+                                <td>{{book.book_description}}</td>
+                                <td><img src="{{book.book_image.url}}" alt="" width'></td>
+                                <td>{{book.book_volume}}</td>
+                                <td>{{book.bookprice.price}}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                      {% if book.book_status == True %}
+                                      <div class="">
+                                        <p class="font-weight-bold mb-0" style="color: rgb(43, 207, 43); font-size: 25px;"><i class="fa-solid fa-circle-check"></i></p>
+                                      </div>
+                                      {% else %}
+                                      <div class="">
+                                        <p class="font-weight-bold mb-0" style="color: rgb(247, 47, 47); font-size: 25px; "><i class="fa-solid fa-circle-xmark"></i></p>
+                                      </div>
+                                      {% endif %}
+                                    </div>
+                                  </td>
+                                  <td class="text-right">
+                                    <div class="actions">
+                                       <a href="{% url 'editbook' book.id %}" class="btn btn-sm bg-success-light mr-2">
+                                       <i class="fas fa-pen"></i>
+                                       </a>
+                                       <a href="{% url 'deletebook' book.id %}" class="btn btn-sm bg-danger-light">
+                                       <i class="fas fa-trash"></i>
+                                       </a>
+                                    </div>
+                                 </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock body %}
+{% block js %}
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script>
+      $(document).ready(function() {
+    $('#dataTable3').DataTable();
+} );
+  </script>
+{% endblock js %}
+
+

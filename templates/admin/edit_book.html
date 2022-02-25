@@ -7,14 +7,14 @@
 <div class="mt-5">
   <div class="hero-body">
     <div style="margin: auto">
-      <form class="frame" method="POST" action="{% url 'addbook' %}" enctype="multipart/form-data">
+      <form class="frame" method="POST" action="{% url 'updatebook' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="frame__body">
           <div class="row level fill-height">
             <div class="col">
               <div class="space xlarge"></div>
               <div class="padded">
-                <h1 class="u-text-center u-font-alt">Add Book</h1>
+                <h1 class="u-text-center u-font-alt">Edit Book</h1>
                 {% include 'common/error.html '%}
                 <div class="form-group">
                   <label class="form-group-label">
@@ -22,7 +22,7 @@
                       <i class="fa-wrapper far fa-user"></i>
                     </span>
                   </label>
-                  <input type="text" class="form-group-input" name="book_name" placeholder="Enter book name" />
+                  <input type="text" class="form-group-input" name="book_name" value="{% for book in books %}{{book.book_name}}{% endfor %}" />
                 </div>
 
                 <div class="form-group">
@@ -31,7 +31,7 @@
                       <i class="fa-wrapper far fa-envelope"></i>
                     </span>
                   </label>
-                  <input type="text" class="form-group-input" name="book_isbn" placeholder="Enter book isbn" />
+                  <input type="text" class="form-group-input" name="book_isbn"value="{% for book in books %}{{book.book_isbn}}{% endfor %}" />
                 </div>
 
                 <div class="form-section section-inline">
@@ -42,7 +42,7 @@
                           <i class="fa-wrapper far fa-calendar"></i>
                         </span>
                       </label>
-                      <input type="date" class="form-group-input" name="publish_date"
+                      <input type="date" class="form-group-input" name="publication_date"
                         placeholder="Enter Book Publication Date" />
                     </div>
                     <div class="form-group col-6 pr-2">
@@ -51,7 +51,7 @@
                           <i class="fa-wrapper far fa-envelope"></i>
                         </span>
                       </label>
-                      <input type="text" class="form-group-input" name="author_name" placeholder="Enter book Author Name" />                        
+                      <input type="text" class="form-group-input" name="book_publisher"value="{% for book in books %}{{book.publisher.author_name}}{% endfor %}"/>                        
                     </select>
                     </div>
                   </div>
@@ -64,7 +64,7 @@
                           <i class="fa-wrapper far fa-envelope"></i>
                         </span>
                       </label>
-                      <input type="text" class="form-group-input" name="category" placeholder="Enter book Category" />
+                      <input type="text" class="form-group-input" name="book_category" value="{% for book in books %}{{book.category.category_name}}{% endfor %}" />
                     </div>
                     <div class="form-group col-6 pr-2">
                       <label class="form-group-label">
@@ -72,7 +72,7 @@
                           <i class="fa-wrapper far fa-envelope"></i>
                         </span>
                       </label>
-                      <input type="text" class="form-group-input" name="language" placeholder="Enter book  Language" />
+                      <input type="text" class="form-group-input" name="book_language"value="{% for book in books %}{{book.text.language}}{% endfor %}" />
                     </div>
                   </div>
                 </div>
@@ -82,7 +82,7 @@
                       <i class="fa-wrapper far fa-envelope"></i>
                     </span>
                   </label>
-                  <input type="text" class="form-group-input" name="reading_age" placeholder="Enter book reading age" />
+                  <input type="text" class="form-group-input" name="book_reading_age" value="{% for book in books %}{{book.book_reading_age}}{% endfor %}" />
                 </div>
 
                 <div class="form-group">
@@ -91,7 +91,7 @@
                       <i class="fa-wrapper far fa-envelope"></i>
                     </span>
                   </label>
-                  <input type="text" class="form-group-input" name="weight" placeholder="Enter book weight" />
+                  <input type="text" class="form-group-input" name="book_weight" value="{% for book in books %}{{book.book_weight}}{% endfor %}" />
                 </div>
                 <div class="form-group">
                   <label class="form-group-label">
@@ -99,7 +99,7 @@
                       <i class="fa-wrapper far fa-envelope"></i>
                     </span>
                   </label>
-                  <input type="text" class="form-group-input" name="dimensions" placeholder="Enter book dimensions" />
+                  <input type="text" class="form-group-input" name="book_dimensions" value="{% for book in books %}{{book.book_dimensions}}{% endfor %}" />
                 </div>
                 <div class="form-group">
                   <label class="form-group-label">
@@ -107,7 +107,7 @@
                       <i class="fa-wrapper far fa-envelope"></i>
                     </span>
                   </label>
-                  <input type="text" class="form-group-input" name="volume" placeholder="Enter book volume" />
+                  <input type="text" class="form-group-input" name="book_volume" value="{% for book in books %}{{book.book_volume}}{% endfor %}" />
                 </div>
                 <div class="form-group">
                   <label class="form-group-label">
@@ -115,7 +115,7 @@
                       <i class="fa-wrapper far fa-envelope"></i>
                     </span>
                   </label>
-                  <input type="text" class="form-group-input" name="origin" placeholder="Enter book origin" />
+                  <input type="text" class="form-group-input" name="book_origin" value="{% for book in books %}{{book.book_origin}}{% endfor %}" />
                 </div>
                 <div class="form-group">
                   <label class="form-group-label">
@@ -123,7 +123,7 @@
                       <i class="fa-wrapper far fa-envelope"></i>
                     </span>
                   </label>
-                  <input type="text" class="form-group-input" name="price" placeholder="Enter book price" />
+                  <input type="text" class="form-group-input" name="book_price" value="{% for book in books %}{{book.bookprice.price}}{% endfor %}" />
                 </div>
                 <div class="form-group">
                   <label class="form-group-label">
@@ -131,19 +131,19 @@
                       <i class="fa-wrapper far fa-envelope"></i>
                     </span>
                   </label>
-                  <input type="file" name="cover_image" class="form-group-input" />
+                  <input type="file" name="book_image" class="form-group-input" />
                 </div>
-                <textarea name="description" placeholder="Book Description"></textarea>
+                <textarea name="book_description" placeholder="Book Description">{% for book in books %}{{book.book_description}}{% endfor %}</textarea>
 
                 <div class="form-ext-control form-ext-checkbox">
-                  <input type="checkbox" id="check1" class="form-ext-input" name="check" checked/>
+                  <input type="checkbox" id="check1" class="form-ext-input" name="book_status"/>
                   <label class="form-ext-label" for="check1">Book Status</label>
                 </div>
 
                 <div class="space"></div>
 
                 <div class="btn-group u-pull-right">
-                  <button type="submit" class="btn-info">Add</button>
+                  <button type="submit" class="btn-info">Update</button>
                 </div>
               </div>
               <div class="space xlarge"></div>

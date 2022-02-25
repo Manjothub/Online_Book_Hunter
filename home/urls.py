@@ -8,5 +8,14 @@ urlpatterns = [
     path('doLogout',DOLOGOUT,name='doLogout'),
     path('contact',CONTACT,name='contactpage'),
     path("admin_dashboard",ADMIN_DASHBOARD,name="dashboardadmin"),
-    path("add/book",ADDBOOK,name="addbook")
+    
+    
+    path("add/book",ADDBOOK,name="addbook"),
+    path("view/book",VIEWBOOKS,name="viewbook"),
+    path("view/authors",VIEWAUTHORS,name="viewauthor"),
+    path("view/categories",VIEWCATEGORIES,name="viewcategories"),
+    
+    path('edit/book/<int:id>',EDITBOOKS,name="editbook"),
+    path('update/book/',UPDATEBOOKS,name="updatebook"),
+    path('delete/book/<int:id>',DELETEBOOKS,name="deletebook"),
     ]
