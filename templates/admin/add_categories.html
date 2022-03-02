@@ -1,0 +1,37 @@
+{% extends "admin/admin_dashboard.html" %} 
+{% block body %}
+<div class="mt-5">
+    <div class="hero-body">
+      <div style="margin: auto">
+        <form class="frame" method="POST" action="{% url 'addcategories' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="frame__body">
+            <div class="row level fill-height">
+              <div class="col">
+                <div class="space xlarge"></div>
+                <div class="padded">
+                  <h1 class="u-text-center u-font-alt">Add Categories</h1>
+                  {% include 'common/error.html '%}
+                  <div class="form-group">
+                    <label class="form-group-label">
+                      <span class="icon">
+                        <i class="fa-wrapper far fa-user"></i>
+                      </span>
+                    </label>
+                    <input type="text" class="form-group-input" name="categoryname" placeholder="Enter Category name" />
+                  </div>
+                  <div class="space"></div>
+  
+                  <div class="btn-group u-pull-right">
+                    <button type="submit" class="btn-info">Add</button>
+                  </div>
+                </div>
+                <div class="space xlarge"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

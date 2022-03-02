@@ -9,7 +9,11 @@ from .forms import *
 
 
 def INDEX(request):
-    return render(request,'user/index.html')
+    books = Book.objects.all()
+    context ={
+        'books':books
+    }
+    return render(request,'user/index.html',context)
 
 def ADMIN_DASHBOARD(request):
     user = CustomUser.objects.get(id=request.user.id)
@@ -50,6 +54,9 @@ def DOLOGOUT(request):
 def CONTACT(request):
     return render(request,'user/contact.html')
 
+
+
+#Admin Functions Starts Here
 def ADDBOOK (request):
     if request.method == 'POST':
         book_name = request.POST.get('book_name')
@@ -57,6 +64,8 @@ def ADDBOOK (request):
         publish_date = request.POST.get('publish_date')
         author_name = request.POST.get('author_name')
         book_category = request.POST.get('category')
+        book_main_category = request.POST.get('main_category')
+        book_sub_category = request.POST.get('sub_category')
         book_language = request.POST.get('language')
         reading_age = request.POST.get('reading_age')
         book_weight = request.POST.get('weight')
@@ -72,17 +81,19 @@ def ADDBOOK (request):
         )
         author.save()
         
-        category = BookCategory(
-            category_name = book_category
+        categorys = BookCategory.objects.get(id =book_category)
+        
+        maincategory = MainCategory(
+            main_category = categorys,
+            name = book_main_category
         )
-        category.save()
+        maincategory.save()
+        
         
         price = BookPrice(
             price = book_price
         )
         price.save()
-        
-        # # print(price)
        
         language = BookLanguage(
             language = book_language
@@ -100,7 +111,8 @@ def ADDBOOK (request):
             book_weight = book_weight,
             book_dimensions = book_dimensions,
             book_origin = book_origin,
-            category = category,
+            category = categorys,
+            main_category = maincategory,
             book_status = checkbox,
             book_description = book_desc,
             book_image = book_image,
@@ -115,14 +127,17 @@ def ADDBOOK (request):
         else:
             messages.error(request,'Something went wrong')
             return redirect('addbook')
-    return render(request,'admin/add_book.html')
+    categories = BookCategory.objects.all()
+    context ={
+        'categories':categories
+    }
+    return render(request,'admin/add_book.html',context)
 
 def VIEWBOOKS(request):
     books = Book.objects.all()
     context ={
         'books':books
     }
-    print(context)
     return render(request,'admin/view_books.html',context)
 
 def VIEWAUTHORS(request):
@@ -130,8 +145,21 @@ def VIEWAUTHORS(request):
     context ={
         'books':books
     }
-    print(context)
     return render(request,'admin/authors_list.html',context)
+
+def ADDCATEGORIES(request):
+    if request.method == 'POST':
+        name = request.POST.get('categoryname')
+        category = BookCategory(
+            category_name = name
+        )
+        if category is not None:
+            category.save()
+            messages.success(request,'Category Added')
+        else:
+            messages.error(request,'Fields needs to be checked')
+    return render(request,'admin/add_categories.html')
+
 
 def VIEWCATEGORIES(request):
     books = Book.objects.all()
@@ -203,7 +231,6 @@ def UPDATEBOOKS(request):
             book_volume = volume,
             bookprice = bookprice,
         )
-        print(books)
         books.save()
         if books is not None:
             messages.success(request,'Data Updated')
@@ -214,9 +241,46 @@ def UPDATEBOOKS(request):
     return render(request,'admin/edit_book.html')
 
 
-
-
 def DELETEBOOKS(request,id):
     books= Book.objects.get(id=id)
     books.delete()
     return redirect('viewbook')
+
+def ISSUEBOOK(request):
+    return render(request,'admin/issue book.html')
+
+
+
+
+
+
+
+
+def BOOKVIEWCATEGORY(request,items):
+    if items == 0:
+        categories = BookCategory.objects.all()
+        books = Book.objects.all()
+        context ={
+            'categories' : categories,
+            'books':books
+            }
+
+        return render(request,'user/category.html',context)
+        
+    books = Book.objects.filter(category=items)
+    categories = BookCategory.objects.all()
+    context ={
+            'categories' : categories,
+            'books':books
+            }
+    return render(request,'user/category.html',context)
+
+
+def BOOKDETAIL(request,id):
+    product = Book.objects.filter(id=id)
+    context ={
+        'product':product
+    }
+    return render(request,'user/product_detail.html',context)
+
+

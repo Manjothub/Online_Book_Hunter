@@ -17,6 +17,7 @@ height: 40px;
         <div class="card" style="width: 100%;">
             <div class="card-body">
                 <h4 class="header-title">Book Information</h4>
+                {% include 'common/error.html '%}
                 <div class="data-tables datatable-dark">
                     <table id="dataTable3" class="text-center">
                         <thead class="text-capitalize">
@@ -53,7 +54,7 @@ height: 40px;
                                 <td>{{book.book_origin}}</td>
                                 <td>{{book.category.category_name}}</td>
                                 <td>{{book.book_description}}</td>
-                                <td><img src="{{book.book_image.url}}" alt="" width'></td>
+                                <td><img src="{{book.book_image.url}}" alt=""></td>
                                 <td>{{book.book_volume}}</td>
                                 <td>{{book.bookprice.price}}</td>
                                 <td>

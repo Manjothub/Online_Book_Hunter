@@ -46,10 +46,9 @@
   .owl-carousel .owl-nav.disabled,
   .owl-carousel .owl-dots.disabled {
     display: none; }
-  .owl-carousel .owl-nav{
-    top: 93%;
-    left: 93%;
-  } 
+  .owl-carousel .owl-dots{
+    display: none !important;
+  }
   .owl-carousel .owl-dot {
     cursor: pointer;
     cursor: hand;

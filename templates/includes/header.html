@@ -20,34 +20,9 @@
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                             aria-haspopup="true" aria-expanded="false">Books</a>
                         <ul class="dropdown-menu">
-                            <li class="nav-item"><a class="nav-link" href="#">Shop by Category</a></li>
-                            <!-- <li class="nav-item"><a class="nav-link" href="single-product.html">Product
-                                    Details</a></li> -->
-                            <!-- <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a>
-                            </li> -->
-                            <!-- <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-                            <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a>
-                            </li> -->
+                            <li class="nav-item"><a class="nav-link" href="{% url 'viewbookscategory' 0  %}">Shop by Category</a></li>
                         </ul>
                     </li>
-                    <!-- <li class="nav-item submenu dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                            aria-haspopup="true" aria-expanded="false">Blog</a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Blog Details</a>
-                            </li>
-                        </ul>
-                    </li> -->
-                    <!-- <li class="nav-item submenu dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                            aria-haspopup="true" aria-expanded="false">Pages</a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
-                            <li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
-                            <li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-                        </ul>
-                    </li> -->
                     <li class="nav-item"><a class="nav-link" href="{% url 'loginpage' %}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contactpage' %}">Contact</a></li>
                 </ul>
