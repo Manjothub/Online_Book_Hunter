@@ -1,0 +1,57 @@
+{% extends "user/student_dashboard.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'studentdashboard/assets/extra-libs/multicheck/multicheck.css' %}">
+<link href="{% static 'studentdashboard/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
+<link href="{% static 'studentdashboard/dist/css/style.min.css' %}" rel="stylesheet">
+{% endblock css %}
+{% load static %}
+{% block body %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title" style="font-size: 50px; color: #B33030;">Book Issued </h5>
+        <div class="table-responsive">
+            <table id="zero_config" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Image</th>
+                        <th>ISBN</th>
+                        <th>Author</th>
+                        <th>Issued Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for books in issuebooks %}
+                    <tr>
+                        <td>{{books.book_name}}</td>
+                        <td>{{books.book_name.main_category}}</td>
+                        <td><img src="{{books.book_name.book_image.url}}" alt="image" srcset="" style="margin-left:90px;" height="50px" width="50px"></td>
+                        <td>{{books.book_name.book_isbn}}</td>
+                        <td>{{books.book_name.publisher}}</td>
+                        <td>{{books.issued_date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endblock body %}
+{% block js %}
+<!-- this page js -->
+<script src="{% static 'studentdashboard/assets/extra-libs/multicheck/datatable-checkbox-init.js'%} "></script>
+<script src="{% static 'studentdashboard/assets/extra-libs/multicheck/jquery.multicheck.js'%} "></script>
+<script src="{% static 'studentdashboard/assets/extra-libs/DataTables/datatables.min.js'%} "></script>
+<script>
+    /****************************************
+     *       Basic Table                   *
+     ****************************************/
+    $('#zero_config').DataTable();
+</script>
+{% endblock js %}

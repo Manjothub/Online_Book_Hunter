@@ -46,6 +46,7 @@
               </div>
               <div class="col-xl-6">
                 <div class="card-body p-md-5 text-black">
+                  {% include 'common/error.html '%}
                   <h3 class="mb-5 text-uppercase">Student registration form</h3>
                 <form method="POST" action="{% url 'student_registration' %}" enctype="multipart/form-data">
                     {% csrf_token %}

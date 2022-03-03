@@ -91,3 +91,5 @@ class IssuedBook(models.Model):
     category = models.CharField(max_length=100,null=True)
     sub_category = models.CharField(max_length=100,null=True)
     issued_date = models.DateField(auto_now=True)
+    
+    

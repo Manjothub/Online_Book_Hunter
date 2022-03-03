@@ -72,10 +72,10 @@ height: 40px;
                                   </td>
                                   <td class="text-right">
                                     <div class="actions">
-                                       <a href="{% url 'editbook' book.id %}" class="btn btn-sm bg-success-light mr-2">
+                                       <a href="{% url 'editbook' book.id %}" class="btn-edit" style="padding: 5px; font-size: 17px;">
                                        <i class="fas fa-pen"></i>
                                        </a>
-                                       <a href="{% url 'deletebook' book.id %}" class="btn btn-sm bg-danger-light">
+                                       <a href="{% url 'deletebook' book.id %}" class="btn-delete" style="padding: 5px; font-size: 17px;">
                                        <i class="fas fa-trash"></i>
                                        </a>
                                     </div>

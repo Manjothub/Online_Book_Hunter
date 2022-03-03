@@ -19,9 +19,14 @@ urlpatterns = [
     path('update/book/',UPDATEBOOKS,name="updatebook"),
     path('delete/book/<int:id>',DELETEBOOKS,name="deletebook"),
     path('issue/book',ISSUEBOOK,name="issuebook"),
+    path('issued/view/book',VIEWISSUEDBOOK,name="issuedbooks"),
+    
+    
     path("student/student_registration",STUDENTREGISTER, name="student_registration"),
-        
+    path("student/dashboard",STUDENT_DASHBOARD, name="dashboardstudent"),   
     path('view/books/categorys/<int:items>/',BOOKVIEWCATEGORY,name = "viewbookscategory"),
-    path('view/book_detail/<str:id>',BOOKDETAIL,name="bookdetials")
+    path('view/book_detail/<str:id>',BOOKDETAIL,name="bookdetials"),
+    path('view/issued-books/',STUDENTISSUEDBOOKS,name="studentbookissued")
+    
     
     ]

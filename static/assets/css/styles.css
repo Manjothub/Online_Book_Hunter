@@ -143,9 +143,7 @@
     background: #303641;
     border-bottom: 1px solid #343e50;
 }
-.sidebar-menu .logo{
-    text-align: center;
-}
+
 .logo a {
     display: inline-block;
     max-width: 120px;

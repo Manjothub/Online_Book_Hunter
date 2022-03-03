@@ -15,6 +15,7 @@ def INDEX(request):
     }
     return render(request,'user/index.html',context)
 
+@login_required(login_url = 'login')
 def ADMIN_DASHBOARD(request):
     user = CustomUser.objects.get(id=request.user.id)
     context ={
@@ -36,7 +37,7 @@ def DOLOGIN(request):
             if user_type == '1':
                 return redirect('dashboardadmin')
             elif user_type =='2':
-                return HttpResponse('This is Student Pannel')
+                return redirect('dashboardstudent')
             else:
                 messages.error(request,"Invalid Credentials")
                 return redirect('loginpage')
@@ -44,7 +45,7 @@ def DOLOGIN(request):
             messages.error(request,"Invalid Credentials")
             return redirect('loginpage')
         
-        
+       
 def DOLOGOUT(request):
     logout(request)
     return redirect('loginpage')
@@ -54,7 +55,7 @@ def CONTACT(request):
     return render(request,'user/contact.html')
 
 
-
+@login_required(login_url = 'login')
 #Admin Functions Starts Here
 def ADDBOOK (request):
     if request.method == 'POST':
@@ -132,6 +133,7 @@ def ADDBOOK (request):
     }
     return render(request,'admin/add_book.html',context)
 
+@login_required(login_url = 'login')
 def VIEWBOOKS(request):
     books = Book.objects.all()
     context ={
@@ -139,6 +141,7 @@ def VIEWBOOKS(request):
     }
     return render(request,'admin/view_books.html',context)
 
+@login_required(login_url = 'login')
 def VIEWAUTHORS(request):
     books = Book.objects.all()
     context ={
@@ -146,6 +149,7 @@ def VIEWAUTHORS(request):
     }
     return render(request,'admin/authors_list.html',context)
 
+@login_required(login_url = 'login')
 def ADDCATEGORIES(request):
     if request.method == 'POST':
         name = request.POST.get('categoryname')
@@ -159,7 +163,7 @@ def ADDCATEGORIES(request):
             messages.error(request,'Fields needs to be checked')
     return render(request,'admin/add_categories.html')
 
-
+@login_required(login_url = 'login')
 def VIEWCATEGORIES(request):
     books = Book.objects.all()
     context ={
@@ -167,6 +171,7 @@ def VIEWCATEGORIES(request):
     }
     return render(request,'admin/view_categories.html',context)
 
+@login_required(login_url = 'login')
 def EDITBOOKS(request,id):
     books = Book.objects.filter(id=id)
     context ={
@@ -174,6 +179,7 @@ def EDITBOOKS(request,id):
     }
     return render(request,'admin/edit_book.html',context)
 
+@login_required(login_url = 'login')
 def UPDATEBOOKS(request):
     if request.method == 'POST':
         book_name = request.POST.get('book_name')
@@ -190,9 +196,7 @@ def UPDATEBOOKS(request):
         origin = request.POST.get('book_origin')
         price = request.POST.get('book_price')
         desc = request.POST.get('book_description')
-        available = request.POST.get('book_status') =='on'
-        # print(book_name,isbn,publish_date,author_name,category,language,reading_age,weight,dimensions,volume,origin,price,desc,available)
-        
+        available = request.POST.get('book_status') =='on' 
         authors = BookAuthor(
             author_name = author_name
         )
@@ -239,16 +243,21 @@ def UPDATEBOOKS(request):
             return redirect('editbook')
     return render(request,'admin/edit_book.html')
 
-
+@login_required(login_url = 'login')
 def DELETEBOOKS(request,id):
     books= Book.objects.get(id=id)
     books.delete()
     return redirect('viewbook')
 
+
+
+@login_required(login_url = 'login')
 def ISSUEBOOK(request):
     books = Book.objects.all()
+    students = Student.objects.all()
     context ={
-        'books':books
+        'books':books,
+        'students':students
     }
     if request.method == 'POST':
         book_name=request.POST.get('book_name')
@@ -258,7 +267,6 @@ def ISSUEBOOK(request):
         book_volume = request.POST.get('volume')
         book_category = request.POST.get('category')
         sub_category = request.POST.get('sub_category')
-        issue_date = request.POST.get('issue_date')
         books = Book.objects.get(id=book_name)
         student = Student.objects.get(id=student_id)
         issuebook = IssuedBook(
@@ -269,16 +277,15 @@ def ISSUEBOOK(request):
             author_name = author_name,
             category = book_category,
             sub_category = sub_category,
-            issued_date  = issue_date
         )
         if issuebook is not None:
-            # issuebook.save()
-            print(issuebook)
+            issuebook.save()
+            # print(issuebook)
             messages.success(request,'Book Issued Sucessfully')
-            return redirect('admin_dashboard')
+            return redirect('issuedbooks')
         else:
             messages.error(request,'Book Issued Failed')
-            return redirect('admin_dashboard')   
+            return redirect('dashboardadmin')   
     return render(request,'admin/issue_book.html',context)
 
 
@@ -307,12 +314,14 @@ def BOOKVIEWCATEGORY(request,items):
     return render(request,'user/category.html',context)
 
 
+
 def BOOKDETAIL(request,id):
     product = Book.objects.filter(id=id)
     context ={
         'product':product
     }
     return render(request,'user/product_detail.html',context)
+
 
 
 def STUDENTREGISTER(request):
@@ -350,10 +359,49 @@ def STUDENTREGISTER(request):
                 user_type=2
             )    
             user.set_password(password)
-            print(user)
+            user.save()
         student = Student.objects.create(user=user, phone=phone, branch=branch,student_dob=date_birth,gender=gender,roll_no=roll_no, image=image)
-        print(student)
-        # student.save()
-        # alert = True
-        return redirect('loginpage')
+        if student is not None:
+            student.save()
+            messages.success(request,'Account Created Successfully')
+            return redirect('loginpage')
+        else:
+            messages.error(request,'Some error occured')
+            return redirect('student_registration')
     return render(request, "user/student_registration.html")
+
+@login_required(login_url = 'login')
+def STUDENT_DASHBOARD(request):
+    user = CustomUser.objects.get(id=request.user.id)
+    books = Book.objects.all().count()
+    context ={
+        "user":user,
+        'books':books
+    }
+    return render(request,'user/home.html',context)
+
+
+@login_required(login_url = 'login')
+def STUDENTISSUEDBOOKS(request):
+    return render(request,'user/issued_book.html')
+
+
+@login_required(login_url = 'login')
+def VIEWISSUEDBOOK(request):
+    issuedBooks = IssuedBook.objects.all()
+    print(issuedBooks)
+    context ={
+        'issuedBooks':issuedBooks
+    }
+    return render(request,'admin/issued_books.html',context)
+
+def STUDENTISSUEDBOOKS(request):
+    user = request.user
+    student = Student.objects.filter(user=user)
+    issuedBooks = IssuedBook.objects.filter(student_name=student[0])
+    issuedBooksdata = IssuedBook.objects.filter(student_name=student[0]).count()
+    context={
+        'issuebooks':issuedBooks,
+        'issuedata' :issuedBooksdata
+    }
+    return render(request,'user/issued_book.html',context)

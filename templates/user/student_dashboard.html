@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    {% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Student Dashboard</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{ % static 'studentdashboard/assets/images/favicon.png' %}">
+    <!-- Custom CSS -->
+    <link href="{% static 'studentdashboard/assets/libs/fullcalendar/dist/fullcalendar.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'studentdashboard/assets/extra-libs/calendar/calendar.css'%}" rel="stylesheet" />
+    <link href="{% static 'studentdashboard/dist/css/style.min.css'%}" rel="stylesheet">
+    {% block css %}
+      
+    {% endblock css %}
+</head>
+<body>  
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
+        {% include "user/header.html" %}
+
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+
+            <div class="scroll-sidebar">
+
+                {% include 'user/sidebar.html' %}
+
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <div class="page-wrapper">
+            <div class="container-fluid">
+            {% block body %}
+              
+            {% endblock body %}
+            {% include "user/footer.html" %}
+        </div>
+        </div>
+    </div>
+    <script src="{% static 'studentdashboard/assets/libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'studentdashboard/dist/js/jquery-ui.min.js' %}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{% static 'studentdashboard/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+{% block js %}
+  
+{% endblock js %}
+</body>
+
+</html>

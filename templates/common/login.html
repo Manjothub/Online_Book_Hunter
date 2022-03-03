@@ -38,6 +38,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="login_form_inner">
+                    {% include 'common/error.html '%}
                     <h3>Log in to enter</h3>
                     <form class="row login_form" action="{% url 'doLogin' %}" method="POST" id="contactForm" novalidate="novalidate">
                         {% csrf_token %}
