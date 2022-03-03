@@ -35,9 +35,8 @@ def DOLOGIN(request):
             user_type=user.user_type
             if user_type == '1':
                 return redirect('dashboardadmin')
-                # return HttpResponse('This is admin Pannel')
             elif user_type =='2':
-                return HttpResponse('This is customer Pannel')
+                return HttpResponse('This is Student Pannel')
             else:
                 messages.error(request,"Invalid Credentials")
                 return redirect('loginpage')
@@ -247,8 +246,40 @@ def DELETEBOOKS(request,id):
     return redirect('viewbook')
 
 def ISSUEBOOK(request):
-    return render(request,'admin/issue book.html')
-
+    books = Book.objects.all()
+    context ={
+        'books':books
+    }
+    if request.method == 'POST':
+        book_name=request.POST.get('book_name')
+        author_name=request.POST.get('author')
+        student_id= request.POST.get('student_id')
+        isbn_number = request.POST.get('isbn')
+        book_volume = request.POST.get('volume')
+        book_category = request.POST.get('category')
+        sub_category = request.POST.get('sub_category')
+        issue_date = request.POST.get('issue_date')
+        books = Book.objects.get(id=book_name)
+        student = Student.objects.get(id=student_id)
+        issuebook = IssuedBook(
+            student_name =student,
+            book_name =books,
+            isbn = isbn_number,
+            Volume = book_volume,
+            author_name = author_name,
+            category = book_category,
+            sub_category = sub_category,
+            issued_date  = issue_date
+        )
+        if issuebook is not None:
+            # issuebook.save()
+            print(issuebook)
+            messages.success(request,'Book Issued Sucessfully')
+            return redirect('admin_dashboard')
+        else:
+            messages.error(request,'Book Issued Failed')
+            return redirect('admin_dashboard')   
+    return render(request,'admin/issue_book.html',context)
 
 
 
@@ -284,3 +315,45 @@ def BOOKDETAIL(request,id):
     return render(request,'user/product_detail.html',context)
 
 
+def STUDENTREGISTER(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        branch = request.POST.get('branch')
+        date_birth=request.POST.get('dob_student')
+        gender=request.POST.get('gender')
+        roll_no = request.POST.get('roll_no')
+        image = request.FILES.get('image')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if password != confirm_password:
+            passnotmatch = True
+            return render(request, "user/student_registration.html", {'passnotmatch':passnotmatch})
+
+        if CustomUser.objects.filter(email=email).exists():
+            messages.warning(request,'Email is already Taken')
+            return redirect('student_registration')
+        if CustomUser.objects.filter(username=username).exists():
+            messages.warning(request,username + 'Already Taken')
+            return redirect('student_registration')
+        else:
+            user= CustomUser(
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                email=email,
+                profile_pic=image,
+                user_type=2
+            )    
+            user.set_password(password)
+            print(user)
+        student = Student.objects.create(user=user, phone=phone, branch=branch,student_dob=date_birth,gender=gender,roll_no=roll_no, image=image)
+        print(student)
+        # student.save()
+        # alert = True
+        return redirect('loginpage')
+    return render(request, "user/student_registration.html")

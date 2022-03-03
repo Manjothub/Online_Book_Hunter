@@ -28,11 +28,11 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="login_box_img">
-                    <img class="img-fluid" src="{% static 'img/login.jpg' %}" alt="">
+                    <img src="{% static 'img/login.jpg' %}" alt="">
                     <div class="hover">
                         <h4>New to our website?</h4>
                         <p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-                        <a class="primary-btn" href="#">Create an Account</a>
+                        <a class="primary-btn" href="{% url 'student_registration' %}">Create an Account</a>
                     </div>
                 </div>
             </div>

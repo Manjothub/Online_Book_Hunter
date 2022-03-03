@@ -51,25 +51,25 @@ $(document).ready(function(){
     $(".active-banner-slider").owlCarousel({
         items:1,
         autoplay:false,
-        autoplayTimeout: 5000,
+        autoplayTimeout: 2000,
         loop:true,
         nav:true,
-        navText:["<img src='img/banner/prev.png'>","<img src='img/banner/next.png'>"],
+        navText:["<img src='/static/img/banner/prev.png'>","<img src='/static/img/banner/next.png'>"],
         dots:false
     });
 
     /*=================================
     Javascript for product area carousel
     ==================================*/
-    $(".active-product-area").owlCarousel({
-        items:1,
-        autoplay:false,
-        autoplayTimeout: 5000,
-        loop:true,
-        nav:true,
-        navText:["<img src='img/product/prev.png'>","<img src='img/product/next.png'>"],
-        dots:false
-    });
+    // $(".active-product-area").owlCarousel({
+    //     items:1,
+    //     autoplay:false,
+    //     autoplayTimeout: 5000,
+    //     loop:true,
+    //     nav:true,
+    //     navText:["<img src='img/product/prev.png'>","<img src='img/product/next.png'>"],
+    //     dots:false
+    // });
 
     /*=================================
     Javascript for single product area carousel
@@ -77,7 +77,7 @@ $(document).ready(function(){
     $(".s_Product_carousel").owlCarousel({
       items:1,
       autoplay:false,
-      autoplayTimeout: 5000,
+      autoplayTimeout: 2000,
       loop:true,
       nav:false,
       dots:true
@@ -86,15 +86,15 @@ $(document).ready(function(){
     /*=================================
     Javascript for exclusive area carousel
     ==================================*/
-    $(".active-exclusive-product-slider").owlCarousel({
-        items:1,
-        autoplay:false,
-        autoplayTimeout: 5000,
-        loop:true,
-        nav:true,
-        navText:["<img src='img/product/prev.png'>","<img src='img/product/next.png'>"],
-        dots:false
-    });
+    // $(".active-exclusive-product-slider").owlCarousel({
+    //     items:1,
+    //     autoplay:false,
+    //     autoplayTimeout: 5000,
+    //     loop:true,
+    //     nav:true,
+    //     navText:["<img src='img/product/prev.png'>","<img src='img/product/next.png'>"],
+    //     dots:false
+    // });
 
     //--------- Accordion Icon Change ---------//
 

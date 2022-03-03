@@ -89,4 +89,5 @@ class IssuedBook(models.Model):
     isbn = models.CharField(max_length=13)
     Volume = models.CharField(max_length=50,null=True)
     category = models.CharField(max_length=100,null=True)
+    sub_category = models.CharField(max_length=100,null=True)
     issued_date = models.DateField(auto_now=True)

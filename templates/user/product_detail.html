@@ -43,7 +43,7 @@
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3>{{p.book_name}}</h3>
-                    <h2>Rs {{p.bookprice}}</h2>
+                    <h2>₹ {{p.bookprice}}</h2>
                     <ul class="list">
                         <li><a class="active" href="#"><span>Category</span> : {{p.main_category}}</a></li>
                         {% if p.book_status == True %}
@@ -54,7 +54,7 @@
                     </ul>
                     <p>{{p.book_description}}</p>
                     <div class="card_area d-flex align-items-center">
-                        <a class="primary-btn" href="#">Add to Cart</a>
+                        <a class="primary-btn" href="#">Request Book</a>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
                     </div>
                 </div>

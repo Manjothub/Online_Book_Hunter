@@ -7,7 +7,7 @@
 <div class="mt-5">
     <div class="hero-body">
       <div style="margin: auto">
-        <form class="frame" method="POST" action="{% url 'addbook' %}" enctype="multipart/form-data">
+        <form class="frame" method="POST" action="{% url 'issuebook' %}" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="frame__body">
             <div class="row level fill-height">
@@ -16,143 +16,88 @@
                 <div class="padded">
                   <h1 class="u-text-center u-font-alt">Issue Book</h1>
                   <div class="form-group">
+                    <label class="form-group-label"><span class="icon">
+                      <i class="fa-wrapper far fa-envelope"></i></span></label>
+                    <select class="form-control" name="book_name" id="select_book" style="height: 55px;" onchange="getdata()" required>
+                    <option selected disabled value="">Select Book </option>
+                    {% for book in books %}
+                     <option value="{{book.id}}" data-book="{{book.publisher}}" id="book-{{book.id}}" data-isbn="{{book.book_isbn}}" data-volume="{{book.book_volume}}" data-category="{{book.category}}" data-subcategory="{{book.main_category}}">{{book.book_name}}</option>
+                    {% endfor %}
+                  </select>
+                  </div>
+                  <div class="form-group">
                     <label class="form-group-label">
                       <span class="icon">
                         <i class="fa-wrapper far fa-user"></i>
                       </span>
                     </label>
-                    <input type="text" class="form-group-input" name="book_name" placeholder="Enter book name" />
+                    <input type="text" class="form-group-input" id="isbn" name="isbn" placeholder="Enter book ISBN" />
                   </div>
-  
-                  <div class="form-group">
-                    <label class="form-group-label">
-                      <span class="icon">
-                        <i class="fa-wrapper far fa-envelope"></i>
-                      </span>
-                    </label>
-                    <input type="text" class="form-group-input" name="book_isbn" placeholder="Enter book isbn" />
-                  </div>
-                  
                   <div class="form-section section-inline">
                     <div class="section-body row">
                       <div class="form-group col-6 pl-2">
                         <label class="form-group-label">
                           <span class="icon">
-                            <i class="fa-wrapper far fa-calendar"></i>
+                            <i class="fa-wrapper far fa-user"></i>
                           </span>
                         </label>
-                        <input type="date" class="form-group-input" name="publish_date"
-                          placeholder="Enter Book Publication Date" />
-                      </div>
-                      <div class="form-group col-6 pr-2">
-                        <label class="form-group-label">
-                          <span class="icon">
-                            <i class="fa-wrapper far fa-envelope"></i>
-                          </span>
-                        </label>
-                        <input type="text" class="form-group-input" name="author_name" placeholder="Enter book Author Name" />                        
-                      </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-section section-inline">
-                    <div class="section-body row">
-                      <div class="form-group col-6 pl-2">
-                          <label class="form-group-label"><span class="icon">
-                              <i class="fa-wrapper far fa-envelope"></i></span></label>
-                          <select class="form-control" name="category" style="height: 78px;" required>
-                            <option>Select Category</option>
-                            {% for i in categories %}
-                             <option value="{{i.id}}">{{i.category_name}}</option>
-                            {% endfor %}
-                          </select>
+                        <input type="text" class="form-group-input" id="author" name="author" placeholder="Enter book Author" />
                        </div>
                       <div class="form-group col-6 pr-2">
                         <label class="form-group-label">
                           <span class="icon">
-                            <i class="fa-wrapper far fa-envelope"></i>
+                            <i class="fa-wrapper far fa-user"></i>
                           </span>
                         </label>
-                        <input type="text" class="form-group-input" name="main_category" placeholder="Enter book Main-Category" />
+                        <input type="text" class="form-group-input" id="category" name="category" placeholder="Enter book Category" />
                       </div>
                     </div>
-                  </div>
+                  </div>  
+
+                  <div class="form-section section-inline">
+                    <div class="section-body row">
+                      <div class="form-group col-6 pl-2">
+                        <label class="form-group-label">
+                          <span class="icon">
+                            <i class="fa-wrapper far fa-user"></i>
+                          </span>
+                        </label>
+                        <input type="text" class="form-group-input" id="subcategory" name="sub_category" placeholder="Enter book sub-category" />
+                       </div>
+                      <div class="form-group col-6 pr-2">
+                         <label class="form-group-label">
+                          <span class="icon">
+                            <i class="fa-wrapper far fa-user"></i>
+                          </span>
+                        </label>
+                        <input type="date" class="form-group-input" name="issue_date" />
+                      </div>
+                    </div>
+                  </div>  
                   <div class="form-group">
                     <label class="form-group-label">
                       <span class="icon">
                         <i class="fa-wrapper far fa-envelope"></i>
                       </span>
                     </label>
-                    <input type="text" class="form-group-input" name="language" placeholder="Enter book Language" />
+                    <input type="text" class="form-group-input" id="volume" name="volume" placeholder="Enter book volume" />
                   </div>
+
                   <div class="form-group">
-                    <label class="form-group-label">
-                      <span class="icon">
-                        <i class="fa-wrapper far fa-envelope"></i>
-                      </span>
-                    </label>
-                    <input type="text" class="form-group-input" name="reading_age" placeholder="Enter book reading age" />
-                  </div>
-  
-                  <div class="form-group">
-                    <label class="form-group-label">
-                      <span class="icon">
-                        <i class="fa-wrapper far fa-envelope"></i>
-                      </span>
-                    </label>
-                    <input type="text" class="form-group-input" name="weight" placeholder="Enter book weight" />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-group-label">
-                      <span class="icon">
-                        <i class="fa-wrapper far fa-envelope"></i>
-                      </span>
-                    </label>
-                    <input type="text" class="form-group-input" name="dimensions" placeholder="Enter book dimensions" />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-group-label">
-                      <span class="icon">
-                        <i class="fa-wrapper far fa-envelope"></i>
-                      </span>
-                    </label>
-                    <input type="text" class="form-group-input" name="volume" placeholder="Enter book volume" />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-group-label">
-                      <span class="icon">
-                        <i class="fa-wrapper far fa-envelope"></i>
-                      </span>
-                    </label>
-                    <input type="text" class="form-group-input" name="origin" placeholder="Enter book origin" />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-group-label">
-                      <span class="icon">
-                        <i class="fa-wrapper far fa-envelope"></i>
-                      </span>
-                    </label>
-                    <input type="text" class="form-group-input" name="price" placeholder="Enter book price" />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-group-label">
-                      <span class="icon">
-                        <i class="fa-wrapper far fa-envelope"></i>
-                      </span>
-                    </label>
-                    <input type="file" name="cover_image" class="form-group-input" />
-                  </div>
-                  <textarea name="description" placeholder="Book Description"></textarea>
-  
-                  <div class="form-ext-control form-ext-checkbox">
-                    <input type="checkbox" id="check1" class="form-ext-input" name="check" checked/>
-                    <label class="form-ext-label" for="check1">Book Status</label>
+                    <label class="form-group-label"><span class="icon">
+                      <i class="fa-wrapper far fa-envelope"></i></span></label>
+                  <select class="form-control" name="student_id" style="height: 55px;" required>
+                    <option selected disabled value="">Select Student </option>
+                    {% for student in students %}
+                    <option value="{{student.id}}">{{student.user.first_name}}&nbsp;{{student.user.last_name}}</option>
+                    {% endfor %}
+                  </select>
                   </div>
   
                   <div class="space"></div>
   
                   <div class="btn-group u-pull-right">
-                    <button type="submit" class="btn-info">Add</button>
+                    <button type="submit" class="btn-info">Issue</button>
                   </div>
                 </div>
                 <div class="space xlarge"></div>
@@ -164,3 +109,17 @@
     </div>
   </div>
 {% endblock %}
+{% block js %}
+  <script>
+        //function get form field 
+        getdata = function () {
+            var name = document.getElementById("select_book").value;
+            document.getElementById('author').value = document.getElementById('book-' + name).getAttribute('data-book')
+            document.getElementById('isbn').value = document.getElementById('book-' + name).getAttribute('data-isbn')
+            document.getElementById('volume').value = document.getElementById('book-' + name).getAttribute('data-volume')
+            document.getElementById('category').value = document.getElementById('book-' + name).getAttribute('data-category')
+            document.getElementById('subcategory').value = document.getElementById('book-' + name).getAttribute('data-subcategory')
+        }
+
+  </script>
+{% endblock js %}

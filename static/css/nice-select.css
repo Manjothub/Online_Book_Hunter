@@ -132,7 +132,8 @@
       cursor: default; }
 
 .no-csspointerevents .nice-select .list {
-  display: none; }
+  display: none; 
+}
 
 .no-csspointerevents .nice-select.open .list {
   display: block; }

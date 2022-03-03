@@ -1,6 +1,9 @@
 {% extends "common/base.html" %}
 {% load static %}
 {% block title %} Book Shop {% endblock title %}
+{% block css %}
+      <link rel="stylesheet" href="{% static 'css/slider_category.css'%}">
+{% endblock css %}
 {% block body %}
 
   <!-- Start Header Area -->
@@ -22,9 +25,9 @@
 <!-- end features Area -->
 
 <!-- Start category Area -->
-<!-- <section class="category-area">
+<section class="category-area">
     {% include "includes/category.html" %}
-</section> -->
+</section>
 <!-- End category Area -->
 
 <!-- start product Area -->

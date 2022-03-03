@@ -209,6 +209,7 @@
 	@extend .gradient-bg-reverse;
 	text-align: center;
 	padding: 5px 20px;
+	
 	// @include transition();
 	.form-control {
 		background: transparent;
@@ -249,7 +250,7 @@
 	}
 }
 .navbar-light .navbar-toggler {
-	// @media (max-width: 991px) {
-	// 	margin-right: 15px;
-	// }
+	@media (max-width: 991px) {
+		margin-right: 15px;
+	}
 }

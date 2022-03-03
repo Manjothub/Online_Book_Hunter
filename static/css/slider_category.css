@@ -1,0 +1,73 @@
+
+.carousel {
+	/* width: 650px; */
+	margin: 0 auto;
+	padding-bottom: 50px;
+}
+.carousel .carousel-item {
+	color: #999;
+	font-size: 14px;
+	text-align: center;
+	overflow: hidden;
+	min-height: 340px;
+}
+.carousel .carousel-item a {
+	color: #eb7245;
+}
+.carousel .img-box {
+	width: 179px;
+	height: 200px;
+	margin-left: 30px;
+}
+.carousel .img-box img {
+	width: 175%;
+    height: 250%;
+    display: block;
+    margin-left: -30px;
+	margin-top: 50%;
+}
+.carousel .testimonial {	
+	padding: 30px 0 10px;
+}
+.carousel .overview {	
+	text-align: center;
+	padding-bottom: 5px;
+}
+.carousel .overview b {
+	color: #333;
+	font-size: 15px;
+	text-transform: uppercase;
+	display: block;	
+	padding-bottom: 5px;
+}
+.carousel .star-rating i {
+	font-size: 18px;
+	color: #ffdc12;
+}
+.carousel-control-prev, .carousel-control-next {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: #999;
+	text-shadow: none;
+	top: 4px;
+}
+.carousel-control-prev i, .carousel-control-next i {
+	font-size: 20px;
+	margin-right: 2px;
+}
+.carousel-control-prev {
+	margin-left: -40px;
+    margin-top: 85%;
+}
+.carousel-control-next i {
+	margin-right: -2px;
+}
+.carousel-control-next {
+	right: auto;
+    margin-left: 326px;
+    margin-top: 85%;
+}
+.carousel .carousel-indicators {
+	bottom: 15px;
+}
