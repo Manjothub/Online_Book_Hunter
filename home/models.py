@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 # from django.contrib.auth.models import User
@@ -93,3 +94,10 @@ class IssuedBook(models.Model):
     issued_date = models.DateField(auto_now=True)
     
     
+class RequestBook(models.Model):
+    student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
+    book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
+    request_status = models.IntegerField(null=True,default=0)
+    
+    def __str__(self):
+        return str(self.student_name)

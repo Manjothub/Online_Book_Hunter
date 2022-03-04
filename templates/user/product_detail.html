@@ -25,7 +25,7 @@
 		</div>
 	</section>
 <!-- End Banner Area -->
-
+{% include 'common/error.html '%}
 <div class="product_image_area">
     <div class="container">
         {% for p in product %}
@@ -54,7 +54,10 @@
                     </ul>
                     <p>{{p.book_description}}</p>
                     <div class="card_area d-flex align-items-center">
-                        <a class="primary-btn" href="#">Request Book</a>
+                        <form action="{% url 'saverequest' p.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="primary-btn" type="submit" style="border: none;">Request Book</button>
+                        </form>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
                     </div>
                 </div>

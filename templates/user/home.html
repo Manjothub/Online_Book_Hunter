@@ -10,25 +10,25 @@
             <div class="box bg-success text-center">
                 <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
                 <h6 class="text-white">Book Issued</h6>
-                <h6 class="text-white">0</h6>
+                <h6 class="text-white">{{issuedbooks}}</h6>
             </div>
         </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-        <div class="card card-hover">
-            <div class="box bg-primary text-center">
-                <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
-                <h6 class="text-white">Available Books</h6>
-                <h6 class="text-white">{{books}}</h6>
-            </div>
-        </div>
-        </div>
+        </div> 
+            <div class="col-md-6 col-lg-4">
+                <div class="card card-hover">
+                    <div class="box bg-primary text-center">
+                        <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
+                        <h6 class="text-white"><a href="{% url 'viewbookscategory' 0  %}" class="text-white">Available Books</a></h6>
+                        <h6 class="text-white">{{books}}</h6>
+                    </div>
+                </div>
+                </div>
         <div class="col-md-6 col-lg-4">
         <div class="card card-hover">
             <div class="box bg-danger text-center">
                 <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
                 <h6 class="text-white">Requested Books</h6>
-                <h6 class="text-white">0</h6>
+                <h6 class="text-white">{{requestedbook}}</h6>
             </div>
         </div>
     </div>

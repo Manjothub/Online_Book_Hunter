@@ -1,0 +1,103 @@
+{% extends "admin/admin_dashboard.html" %}
+{% load static %}
+{% block body %}
+
+<div class="row">
+    <div class="col-md-6 col-lg-3">
+        <div class="card card-hover">
+            <div class="box bg-success text-center">
+                <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
+                <h6 class="text-white">Students</h6>
+                <h6 class="text-white">{{students}}</h6>
+            </div>
+        </div>
+        </div> 
+            <div class="col-md-6 col-lg-3">
+                <div class="card card-hover">
+                    <div class="box bg-primary text-center">
+                        <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
+                        <h6 class="text-white">Books</h6>
+                        <h6 class="text-white">{{booksdata}}</h6>
+                    </div>
+                </div>
+                </div>
+        <div class="col-md-6 col-lg-3">
+        <div class="card card-hover">
+            <div class="box bg-danger text-center">
+                <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
+                <h6 class="text-white">Requested Books</h6>
+                <h6 class="text-white">{{requestbook}}</h6>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-6 col-lg-3">
+        <div class="card card-hover">
+            <div class="box bg-danger text-center">
+                <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
+                <h6 class="text-white">Books Issued</h6>
+                <h6 class="text-white">{{issuedbookdata}}</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+           <div class="card-header">
+              <div class="row align-items-center">
+                 <div class="col-6">
+                    <h5 class="card-title">Number of Students</h5>
+                 </div>
+                 <div class="col-6">
+                    <ul class="list-inline-group text-right mb-0 pl-0">
+                       <li class="list-inline-item">
+                          <div class="form-group mb-0 amount-spent-select">
+                             <select class="form-control form-control-sm">
+                                <option>Today</option>
+                                <option>Last Week</option>
+                                <option>Last Month</option>
+                             </select>
+                          </div>
+                       </li>
+                    </ul>
+                 </div>
+              </div>
+           </div>
+           <div class="card-body">
+              <div id="stud_gender"></div>
+           </div>
+        </div>
+     </div>
+     <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+           <div class="card-header">
+              <div class="row align-items-center">
+                 <div class="col-6">
+                    <h5 class="card-title">Books and Categories</h5>
+                 </div>
+                 <div class="col-6">
+                    <ul class="list-inline-group text-right mb-0 pl-0">
+                       <li class="list-inline-item">
+                          <div class="form-group mb-0 amount-spent-select">
+                             <select class="form-control form-control-sm">
+                                <option>Today</option>
+                                <option>Last Week</option>
+                                <option>Last Month</option>
+                             </select>
+                          </div>
+                       </li>
+                    </ul>
+                 </div>
+              </div>
+           </div>
+           <div class="card-body">
+              <div id="categories-books"></div>
+           </div>
+        </div>
+     </div>
+</div>
+
+
+{% endblock body %}
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+{% include "admin/charts.html" %}
+{% endblock js %}

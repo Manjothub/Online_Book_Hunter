@@ -9,14 +9,16 @@ class UserModel(UserAdmin):
 
 admin.site.register(CustomUser,UserModel)
 
-
 admin.site.register(Book)
+
 admin.site.register(BookLanguage)
 
 @admin.register(BookCategory)
 class MainCategoryAdmin(admin.ModelAdmin):
     list_display = ['id','category_name']
+
 admin.site.register(BookPrice)
+
 admin.site.register(BookAuthor)
 
 
@@ -26,4 +28,9 @@ class MainCategoryAdmin(admin.ModelAdmin):
     
     
 admin.site.register(Student)
+
 admin.site.register(IssuedBook)
+
+@admin.register(RequestBook)
+class RequestBookAdmin(admin.ModelAdmin):
+    list_display = ['id','student_name','book_name']

@@ -5,7 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 from datetime import date
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+import json
 from .forms import *
+
 
 
 def INDEX(request):
@@ -18,10 +21,24 @@ def INDEX(request):
 @login_required(login_url = 'login')
 def ADMIN_DASHBOARD(request):
     user = CustomUser.objects.get(id=request.user.id)
+    students = Student.objects.all().count()
+    booksdata = Book.objects.all().count()
+    requestbook = RequestBook.objects.all().count()
+    issuedbookdata = IssuedBook.objects.all().count()
+    student_male = Student.objects.filter(gender = 'Male').count()
+    student_female = Student.objects.filter(gender = 'Female').count()
+    categorieslabels = BookCategory.objects.all().count()
     context ={
-        'user':user
+        'user':user,
+        'students':students,
+        'booksdata':booksdata,
+        'requestbook':requestbook,
+        'issuedbookdata':issuedbookdata,
+        'student_male':student_male,
+        'student_female':student_female,
+        'categorieslabels':categorieslabels
     }
-    return render(request,'admin/admin_dashboard.html',context)
+    return render(request,'admin/homepage.html',context)
 
 def LOGINPAGE(request):
     return render(request,'common/login.html')
@@ -280,7 +297,6 @@ def ISSUEBOOK(request):
         )
         if issuebook is not None:
             issuebook.save()
-            # print(issuebook)
             messages.success(request,'Book Issued Sucessfully')
             return redirect('issuedbooks')
         else:
@@ -374,9 +390,14 @@ def STUDENTREGISTER(request):
 def STUDENT_DASHBOARD(request):
     user = CustomUser.objects.get(id=request.user.id)
     books = Book.objects.all().count()
+    students = Student.objects.get(user=user)
+    issuedbooks = IssuedBook.objects.filter(student_name =students).count()
+    requestedbook = RequestBook.objects.filter(student_name =students).count()
     context ={
         "user":user,
-        'books':books
+        'books':books,
+        "requestedbook":requestedbook,
+        "issuedbooks":issuedbooks
     }
     return render(request,'user/home.html',context)
 
@@ -389,12 +410,12 @@ def STUDENTISSUEDBOOKS(request):
 @login_required(login_url = 'login')
 def VIEWISSUEDBOOK(request):
     issuedBooks = IssuedBook.objects.all()
-    print(issuedBooks)
     context ={
         'issuedBooks':issuedBooks
     }
     return render(request,'admin/issued_books.html',context)
 
+@login_required(login_url = 'login')
 def STUDENTISSUEDBOOKS(request):
     user = request.user
     student = Student.objects.filter(user=user)
@@ -405,3 +426,55 @@ def STUDENTISSUEDBOOKS(request):
         'issuedata' :issuedBooksdata
     }
     return render(request,'user/issued_book.html',context)
+
+def BOOKREQUEST(request,id):
+    if request.method == 'POST':
+            if request.user.is_authenticated:
+                user = request.user.id
+                student = Student.objects.get(user=user)
+                book = Book.objects.get(id=id)
+                bookrequest = RequestBook(
+                    student_name = student,
+                    book_name = book
+                )
+                bookrequest.save()
+                messages.success(request,'Book Requested')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            else:
+                return render(request,'common/login.html')
+    return redirect('bookdetials')
+
+def VIEWREQUESTEDBOOKS(request):
+    requested_books = RequestBook.objects.all()
+    context ={
+        'requested_books':requested_books
+    }
+    return render(request,'admin/requested_books.html',context)
+
+
+@login_required(login_url = 'login')
+def STUDENTAPPROVEBOOK(request,id):
+    bookrequests = RequestBook.objects.get(id=id)
+    bookrequests.request_status = 1
+    bookrequests.save()
+    messages.success(request,'Request Accepted')
+    return redirect('requestedbooks')
+
+@login_required(login_url = 'login')
+def STUDENTDISAPPROVEBOOK(request,id):
+    bookrequests = RequestBook.objects.get(id=id)
+    bookrequests.request_status = 2
+    bookrequests.save()
+    messages.success(request,'Request Cancelled')
+    return redirect('requestedbooks')
+
+@login_required(login_url = 'login')
+def BOOKREQUESTHISTORY(request):
+    student = Student.objects.filter(user=request.user.id)
+    for i in student:
+        student_id = i.id
+        student_book_request_history = RequestBook.objects.filter(student_name = student_id)
+        context={
+            'student_book_request_history':student_book_request_history
+        }
+    return render(request,'user/request_books_history.html',context)
