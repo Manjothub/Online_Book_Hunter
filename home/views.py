@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 import json
+from django.db.models import Q
 from .forms import *
 
 
@@ -333,8 +334,13 @@ def BOOKVIEWCATEGORY(request,items):
 
 def BOOKDETAIL(request,id):
     product = Book.objects.filter(id=id)
+    products = Book.objects.get(id=id)
+    stu=Student.objects.get(user=request.user)
+    
+    show=RequestBook.objects.filter(Q(book_name=products)& Q(student_name=stu))
     context ={
-        'product':product
+        'product':product,
+        'show':show
     }
     return render(request,'user/product_detail.html',context)
 
@@ -435,7 +441,8 @@ def BOOKREQUEST(request,id):
                 book = Book.objects.get(id=id)
                 bookrequest = RequestBook(
                     student_name = student,
-                    book_name = book
+                    book_name = book,
+                    button_value=True
                 )
                 bookrequest.save()
                 messages.success(request,'Book Requested')

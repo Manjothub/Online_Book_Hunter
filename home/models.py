@@ -98,6 +98,7 @@ class RequestBook(models.Model):
     student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
     book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
     request_status = models.IntegerField(null=True,default=0)
+    button_value=models.BooleanField(default=False)
     
     def __str__(self):
         return str(self.student_name)

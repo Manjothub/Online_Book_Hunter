@@ -56,7 +56,11 @@
                     <div class="card_area d-flex align-items-center">
                         <form action="{% url 'saverequest' p.id %}" method="POST">
                             {% csrf_token %}
+                            {% if show %}
+                            <button class="primary-btn" type="submit" style="border: none; " disabled>Already Requested</button>
+                            {% else %}
                             <button class="primary-btn" type="submit" style="border: none;">Request Book</button>
+                            {% endif %}
                         </form>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
                     </div>
