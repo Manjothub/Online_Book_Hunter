@@ -16,25 +16,32 @@ height: 40px;
     <div class="row"> 
         <div class="card" style="width: 100%;">
             <div class="card-body">
-                <h4 class="header-title">Category Table</h4>
+                <h4 class="header-title">User Table</h4>
                 <div class="data-tables datatable-dark">
                     <table id="dataTable3" class="text-center">
                         <thead class="text-capitalize">
                             <tr>
-                                <th> Book Category</th>
+                                <th>Student Name</th>
+                                <th>Student branch</th>
+                                <th>Student Roll number</th>
+                                <th>Student DOB</th>
+                                <th>Student Phone</th>
+                                <th>Gender</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for cat in categories %}
+                            {% for student in students %}
                             <tr>
-                                <td>{{cat.category_name }}</td>
+                                <td>{{student.user.first_name }}&nbsp;{{student.user.last_name }}</td>
+                                <td>{{student.branch }}</td>
+                                <td>{{student.roll_no }}</td>
+                                <td>{{student.student_dob }}</td>
+                                <td>{{student.phone }}</td>
+                                <td>{{student.gender }}</td>
                                 <td class="text-right">
                                     <div class="actions">
-                                       <a href="{% url 'editcategories' cat.id %}" class="btn-edit" style="padding: 5px; font-size: 17px;">
-                                       <i class="fas fa-pen"></i>
-                                       </a>
-                                       <a href="{% url 'deletecategories' cat.id %}" class="btn-delete" style="padding: 5px; font-size: 17px;">
+                                       <a href="{% url 'deletestudent' student.id %}" type="submit" class="btn-delete" style="padding: 5px; font-size: 17px;">
                                        <i class="fas fa-trash"></i>
                                        </a>
                                     </div>
@@ -60,6 +67,7 @@ height: 40px;
 $(document).on('click', '.btn-delete', function(){
     return confirm('Are you sure you want to delete this?');
 })
+
   </script>
 {% endblock js %}
 

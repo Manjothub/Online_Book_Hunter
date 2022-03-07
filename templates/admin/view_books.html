@@ -97,6 +97,11 @@ height: 40px;
       $(document).ready(function() {
     $('#dataTable3').DataTable();
 } );
+
+$(document).on('click', '.btn-delete', function(){
+    return confirm('Are you sure you want to delete this?');
+})
+
   </script>
 {% endblock js %}
 

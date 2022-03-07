@@ -71,13 +71,55 @@
     border: none;
     border-radius: 4px;
     background-color: #fff;
-    -webkit-transition: all 0.3s ease 0s;
-    transition: all 0.3s ease 0s;
+    -webkit-transition: all 0.3s ease 0s !important;
+    transition: all 0.3s ease 0s !important;
 }
 
 .card:hover {
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s ease;
 }
+
+
+.box1{
+    background-color: #4FD3C4;
+   }
+   .box1:hover{
+       color: #000 ;
+       cursor: pointer;
+       background-color: #41a599;
+       transition: all 0.3s ease-in;
+    }
+    .box2{
+    background-color: #495371;
+   }
+   .box2:hover{
+       color: #000 ;
+       cursor: pointer;
+       background-color: #353d55;
+       transition: all 0.3s ease-in;
+    }
+    .box3{
+    background-color: #BB6464;
+   }
+   .box3:hover{
+       color: #000 ;
+       cursor: pointer;
+       background-color: #914949;
+       transition: all 0.3s ease-in;
+    }
+    .box4{
+    background-color: #2EB086;
+   }
+   .box4:hover{
+       color: #000 ;
+       cursor: pointer;
+       background-color: #238364;
+       transition: all 0.3s ease-in;
+    }
+
+
+
 
 .card-body {
     padding: 25.6px;
@@ -148,6 +190,7 @@
     display: inline-block;
     max-width: 120px;
 }
+
 
 .metismenu >li >a {
     padding-left: 32px!important;

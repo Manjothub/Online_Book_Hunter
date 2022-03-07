@@ -46,7 +46,7 @@ height: 40px;
                         <td>{{books.book_name.publisher}}</td>
                         <td>{{books.book_name.book_isbn}}</td>
                         <td>{{books.issued_date}}</td>
-                        <td><a href="#" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this issued book details?')">Delete</a></td>
+                        <td><a href="{% url 'deleteissuedbook' books.id %}" class="btn btn-danger bookIssuedDelete">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -63,5 +63,9 @@ height: 40px;
       $(document).ready(function() {
     $('#dataTable3').DataTable();
 } );
+$(document).on('click', '.bookIssuedDelete', function(){
+    return confirm('Are you sure you want to delete this?');
+})
+
   </script>
 {% endblock js %}

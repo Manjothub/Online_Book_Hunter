@@ -1,0 +1,40 @@
+{% extends "user/student_dashboard.html" %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'studentdashboard/dist/css/user_profile.css' %}">
+{% endblock css %}
+{% block body %}
+{% include 'common/error.html '%}
+<div class="card">
+    <div class="img">
+      <img src="{{user.profile_pic.url}}">
+    </div>
+    <div class="infos">
+      <div class="name">
+        <h2>{{user.first_name}}&nbsp;{{user.last_name}}</h2>
+        <h4>@{{user.username}}</h4>
+      </div>
+      <ul class="stats">
+        <li>
+          <h3>{{user.student.student_dob}}</h3>
+          <h4>D.O.B</h4>
+        </li>
+        <li>
+          <h3>{{user.student.branch}}</h3>
+          <h4>Branch</h4>
+        </li>
+        <li>
+          <h3>{{user.student.roll_no}}</h3>
+          <h4>Roll No</h4>
+        </li>
+        <li>
+          <h3>{{user.student.phone}}</h3>
+          <h4>Phone Number</h4>
+        </li>
+      </ul>
+      <div class="links">
+        <button class="follow" type="submit"><a href="{% url 'studentprofileupdate' %}">Edit Profile</a></button>
+      </div>
+    </div>
+  </div>
+{% endblock %}

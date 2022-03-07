@@ -57,12 +57,11 @@
                         <form action="{% url 'saverequest' p.id %}" method="POST">
                             {% csrf_token %}
                             {% if show %}
-                            <button class="primary-btn" type="submit" style="border: none; " disabled>Already Requested</button>
+                            <button  type="submit" style="border: none; " disabled>Already Requested</button>
                             {% else %}
                             <button class="primary-btn" type="submit" style="border: none;">Request Book</button>
                             {% endif %}
                         </form>
-                        <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
                     </div>
                 </div>
             </div>
@@ -182,7 +181,7 @@
                             <div class="review_item">
                                 <div class="media">
                                     <div class="d-flex">
-                                        <img src="img/product/review-1.png" alt="">
+                                        <img src="{% static 'img/product/review-1.png' %}" alt="">
                                     </div>
                                     <div class="media-body">
                                         <h4>Blake Ruiz</h4>
@@ -197,7 +196,7 @@
                             <div class="review_item reply">
                                 <div class="media">
                                     <div class="d-flex">
-                                        <img src="img/product/review-2.png" alt="">
+                                        <img src="{% static 'img/product/review-2.png' %}" alt="">
                                     </div>
                                     <div class="media-body">
                                         <h4>Blake Ruiz</h4>
@@ -212,7 +211,7 @@
                             <div class="review_item">
                                 <div class="media">
                                     <div class="d-flex">
-                                        <img src="img/product/review-3.png" alt="">
+                                        <img src="{% static 'img/product/review-3.png' %}" alt="">
                                     </div>
                                     <div class="media-body">
                                         <h4>Blake Ruiz</h4>

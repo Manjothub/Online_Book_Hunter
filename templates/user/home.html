@@ -10,7 +10,7 @@
             <div class="box bg-success text-center">
                 <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
                 <h6 class="text-white">Book Issued</h6>
-                <h6 class="text-white">{{issuedbooks}}</h6>
+                <h6 class="text-white count">{{issuedbooks}}</h6>
             </div>
         </div>
         </div> 
@@ -19,7 +19,7 @@
                     <div class="box bg-primary text-center">
                         <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
                         <h6 class="text-white"><a href="{% url 'viewbookscategory' 0  %}" class="text-white">Available Books</a></h6>
-                        <h6 class="text-white">{{books}}</h6>
+                        <h6 class="text-white count">{{books}}</h6>
                     </div>
                 </div>
                 </div>
@@ -28,10 +28,25 @@
             <div class="box bg-danger text-center">
                 <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
                 <h6 class="text-white">Requested Books</h6>
-                <h6 class="text-white">{{requestedbook}}</h6>
+                <h6 class="text-white count">{{requestedbook}}</h6>
             </div>
         </div>
     </div>
 </div>
 
 {% endblock body %}
+{% block js %}
+<script>
+   $('.count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 2500,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
+</script>
+{% endblock js %}

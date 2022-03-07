@@ -1,0 +1,57 @@
+{% extends "user/student_dashboard.html" %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'studentdashboard/dist/css/edit_profile_user.css' %}">
+{% endblock css %}
+{% block body %}
+    <div class="wrapper">
+      <h2>Edit Your Profile</h2>
+      <form action="{% url 'studentprofileupdate' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+        <div class="form-group">
+          <label for="name">First Name</label>
+          <input type="text" name="fname"  value="{{user.first_name}}" placeholder="First name" >
+        </div>
+        <div class="form-group">
+          <label for="name">Profile</label>
+          <input type="file" name="profilepic" required>
+        </div>
+        <div class="form-group">
+          <label for="name">last Name</label>
+          <input type="text" name="lname" value="{{user.last_name}}"  placeholder="Last name" >
+        </div>
+        <div class="form-group">
+          <label for="name">UserName</label>
+          <input type="text" name="username" value="{{user.username}}"  placeholder="username"  disabled>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" name="email" value="{{user.email}}"  placeholder="email@domain.tld"  disabled/>
+        </div>
+        <div class="form-group">
+          <label for="email">Password</label>
+          <input type="password" name="password"/>
+          <small>Fill only if you want to change the password otherwise leave blank for default password</small>
+        </div>
+        <div class="form-group">
+          <label for="message">Date of Birth</label>
+          <input type="date" name="dateofbirth" id="name" required >
+        </div>
+        <div class="form-group">
+            <label for="name">Branch</label>
+            <input type="text" name="branch" value="{{user.student.branch}}" placeholder="Your Branch" >
+        </div>
+        <div class="form-group">
+            <label for="name">Roll No</label>
+            <input type="text" name="rollnum" value="{{user.student.roll_no}}" placeholder="Roll No"  >
+        </div>
+        <div class="form-group">
+            <label for="name">Phone No</label>
+            <input type="text" name="phonenum" value="{{user.student.phone}}" placeholder="Phone Number" >
+        </div>
+        <div class="form-group">
+          <button type="submit" class="submit"><i class="fa-solid fa-pen-to-square"></i>Edit</button>
+        </div>
+      </form>
+    </div>
+{% endblock %}

@@ -1,46 +1,49 @@
 {% extends "admin/admin_dashboard.html" %}
 {% load static %}
+{% block css %}
+  
+{% endblock css %}
 {% block body %}
 
 <div class="row">
     <div class="col-md-6 col-lg-3">
-        <div class="card card-hover">
-            <div class="box bg-success text-center">
-                <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
+        <div class="card card-chart">
+            <div class="box text-center p-4 box1">
+                <!-- <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1> -->
                 <h6 class="text-white">Students</h6>
-                <h6 class="text-white">{{students}}</h6>
+                <h6 class="text-white count" id="count-number">{{students}}</h6>
             </div>
         </div>
         </div> 
             <div class="col-md-6 col-lg-3">
-                <div class="card card-hover">
-                    <div class="box bg-primary text-center">
+                <div class="card card-chart">
+                    <div class="box text-center p-4 box2">
                         <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
                         <h6 class="text-white">Books</h6>
-                        <h6 class="text-white">{{booksdata}}</h6>
+                        <h6 class="text-white count">{{booksdata}}</h6>
                     </div>
                 </div>
                 </div>
         <div class="col-md-6 col-lg-3">
-        <div class="card card-hover">
-            <div class="box bg-danger text-center">
+        <div class="card card-chart">
+            <div class="box text-center p-4 box3">
                 <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
                 <h6 class="text-white">Requested Books</h6>
-                <h6 class="text-white">{{requestbook}}</h6>
+                <h6 class="text-white count">{{requestbook}}</h6>
             </div>
         </div>
     </div>
         <div class="col-md-6 col-lg-3">
-        <div class="card card-hover">
-            <div class="box bg-danger text-center">
+        <div class="card card-chart">
+            <div class="box text-center p-4 box4">
                 <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
                 <h6 class="text-white">Books Issued</h6>
-                <h6 class="text-white">{{issuedbookdata}}</h6>
+                <h6 class="text-white count">{{issuedbookdata}}</h6>
             </div>
         </div>
     </div>
     <div class="col-md-12 col-lg-6">
-        <div class="card card-chart">
+        <div class="card card-chart"  style="height: 60vh;">
            <div class="card-header">
               <div class="row align-items-center">
                  <div class="col-6">
@@ -67,7 +70,7 @@
         </div>
      </div>
      <div class="col-md-12 col-lg-6">
-        <div class="card card-chart">
+        <div class="card card-chart"  style="height: 60vh;">
            <div class="card-header">
               <div class="row align-items-center">
                  <div class="col-6">
@@ -99,5 +102,18 @@
 {% endblock body %}
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+   $('.count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 4000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
+</script>
 {% include "admin/charts.html" %}
 {% endblock js %}

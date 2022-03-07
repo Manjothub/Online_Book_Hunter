@@ -175,19 +175,60 @@ def ADDCATEGORIES(request):
             category_name = name
         )
         if category is not None:
-            category.save()
-            messages.success(request,'Category Added')
+            if BookCategory.objects.filter(category_name=category).exists():
+                messages.warning(request,'Category is already Taken')
+                return redirect('addcategories')
+            else:
+                category.save()
+                messages.success(request,'Category Added')
         else:
             messages.error(request,'Fields needs to be checked')
     return render(request,'admin/add_categories.html')
 
 @login_required(login_url = 'login')
 def VIEWCATEGORIES(request):
-    books = Book.objects.all()
+    categories = BookCategory.objects.all()
     context ={
-        'books':books
+        'categories':categories
     }
     return render(request,'admin/view_categories.html',context)
+
+def EDITCATEGORIES(request,id):
+    categories = BookCategory.objects.get(id=id)
+    context ={
+        'categories':categories
+    }
+    return render(request,'admin/edit_categories.html',context)
+
+def UPDATECATEGORIES(request):
+    if request.method == 'POST':
+        category = request.POST.get('category_name')
+        categorytable = BookCategory(category_name =category)
+        if categorytable is not None:
+            categorytable.save()
+            messages.success(request,'Category Updated Sucessfully')
+            return redirect('viewcategories')
+        else:
+            messages.error(request,'Something went wrong')
+    return render(request,'admin/edit_categories.html')
+
+def DELETECATEGORIES(request,id):
+    categories = BookCategory.objects.get(id=id)
+    categories.delete()
+    return redirect('viewcategories')
+
+
+def USERLIST(request):
+    students = Student.objects.all()
+    context ={
+        'students':students
+    }
+    return render(request,'admin/users_list.html',context)
+
+def DELETESTUDENT(request,id):
+    stud = Student.objects.get(id=id)
+    stud.delete()
+    return redirect('userlist')
 
 @login_required(login_url = 'login')
 def EDITBOOKS(request,id):
@@ -335,9 +376,11 @@ def BOOKVIEWCATEGORY(request,items):
 def BOOKDETAIL(request,id):
     product = Book.objects.filter(id=id)
     products = Book.objects.get(id=id)
-    stu=Student.objects.get(user=request.user)
-    
-    show=RequestBook.objects.filter(Q(book_name=products)& Q(student_name=stu))
+    if request.user.is_authenticated:
+        stu=Student.objects.get(user=request.user)
+        show=RequestBook.objects.filter(Q(book_name=products) & Q(student_name=stu))
+    else:
+         return render(request,'common/login.html')
     context ={
         'product':product,
         'show':show
@@ -421,6 +464,11 @@ def VIEWISSUEDBOOK(request):
     }
     return render(request,'admin/issued_books.html',context)
 
+def DELETEISSUEDBOOK(request,id):
+    bookissued = IssuedBook.objects.get(id=id)
+    bookissued.delete()
+    return redirect('issuedbooks')
+
 @login_required(login_url = 'login')
 def STUDENTISSUEDBOOKS(request):
     user = request.user
@@ -485,3 +533,37 @@ def BOOKREQUESTHISTORY(request):
             'student_book_request_history':student_book_request_history
         }
     return render(request,'user/request_books_history.html',context)
+
+def STUDENTPROFILE(request):
+    return render(request,'user/user_profile.html')
+
+def STUDENTPROFILEUPDATE(request):
+    if request.method == 'POST':
+        profilepic = request.FILES.get('profilepic')
+        firstname = request.POST.get('fname')
+        lastname = request.POST.get('lname')
+        password = request.POST.get('password')
+        studentdob = request.POST.get('dateofbirth')
+        branch = request.POST.get('branch')
+        roll_no = request.POST.get('rollnum')
+        phone_no = request.POST.get('phonenum')
+        try:
+            customuser=CustomUser.objects.get(id=request.user.id)
+            customuser.first_name = firstname
+            customuser.last_name = lastname
+            customuser.profile_pic = profilepic
+            if password != None and password != "":
+                customuser.set_password(password)
+            customuser.save()
+            student = Student.objects.get(user = customuser)
+            student.user = customuser
+            student.student_dob = studentdob
+            student.branch = branch
+            student.roll_no = roll_no
+            student.phone = phone_no
+            student.save()
+            messages.success(request,"Your Profile Updated Successfully")
+            return redirect("studentprofile")
+        except:
+            messages.error(request,"Fail to update your Profile")
+    return render(request,'user/edit_user_profile.html')
