@@ -41,5 +41,6 @@ urlpatterns = [
     path('student/book_request_history/',BOOKREQUESTHISTORY,name ="bookrequesthistory"),
     path('student/profile/',STUDENTPROFILE,name ="studentprofile"),
     path('student/profile/update',STUDENTPROFILEUPDATE,name ="studentprofileupdate"),
+    path('verify-email/<token>',VERIFYSTUDENT,name ="verifystudent"),
     
     ]

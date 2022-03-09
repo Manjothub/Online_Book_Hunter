@@ -41,16 +41,14 @@ height: 40px;
                         <td>
                             <div class="actions">
                                 {% if books.request_status == 0 %}
-                                <a href="{% url 'bookapprove' books.id %}" style="background-color: rgb(70, 204, 82); color: #fff; padding: 10px; border-radius: 5px; ">
+                                <button type="submit"><a href="{% url 'bookapprove' books.id  %}" style="background-color: rgb(70, 204, 82); color: #fff; padding: 10px; border-radius: 5px; ">
                                     Approve
-                                    </a>
-                                <a href="{% url 'bookdisapprove' books.id %}" style="background-color: rgb(204, 70, 70); color: #fff; padding: 10px; border-radius: 5px; margin-left: 2px; " >
-                                        Disapprove
-                                    </a>
+                                    </a></button>
+                                <button type="submit"> <a href="{% url 'bookdisapprove' books.id %}" style="background-color: rgb(204, 70, 70); color: #fff; padding: 10px; border-radius: 5px; margin-left: 2px; " >
+                                    Disapprove
+                                </a></button>
                                   {% elif books.request_status == 1 %}
                                   <button style="background-color: rgb(70, 204, 82); color: #fff; padding: 6px; border-radius: 5px; " disabled>Approved</button>
-                                  {% else %}
-                                <button style="background-color: rgb(204, 70, 70); color: #fff; padding: 6px; border-radius: 5px; margin-left: 2px; " disabled> Disapproved</button>
                                 {% endif %}
                             </div>
                          </td>

@@ -17,7 +17,6 @@ admin.site.register(BookLanguage)
 class MainCategoryAdmin(admin.ModelAdmin):
     list_display = ['id','category_name']
 
-admin.site.register(BookPrice)
 
 admin.site.register(BookAuthor)
 

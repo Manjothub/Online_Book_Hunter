@@ -2,7 +2,7 @@
 <div class="sidebar-menu">
     <div class="sidebar-header">
         <div class="logo">
-            <a href="#"><img src="{% static 'img/dshlogo.png' %}" alt="logo" style="max-width: 175%; height: 10vh;"></a>
+            <a href="{% url 'dashboardadmin' %}"><img src="{% static 'img/dshlogo.png' %}" alt="logo" style="max-width: 175%; height: 10vh;"></a>
         </div>
     </div>
     <div class="main-menu">
@@ -10,14 +10,13 @@
             <nav>
                 <ul class="metismenu" id="menu">
                     <li class="active">
-                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
+                        <a href="{% url 'dashboardadmin' %}" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
                     </li>
                     <li>
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Books</span></a>
                         <ul class="collapse">
                             <li><a href="{% url 'viewbook' %}">Book List</a></li>
                             <li><a href="{% url 'addbook' %}">Add Book</a></li>
-                            <li><a href="{% url 'issuebook' %}">Issue a Book</a></li>
                             <li><a href="{% url 'issuedbooks' %}">Issued Book List</a></li>
                         </ul>
                     </li>
@@ -38,6 +37,12 @@
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Requestes</span></a>
                         <ul class="collapse">
                             <li><a href="{% url 'requestedbooks' %}">Requested Books</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-pie-chart"></i><span>Manage Issued Book</span></a>
+                        <ul class="collapse">
+                            <li><a href="#">Requested Books</a></li>
                         </ul>
                     </li>
                     <li>

@@ -31,7 +31,8 @@ height: 40px;
                         <th>Author Name</th>
                         <th>ISBN</th>
                         <th>Issued Date</th>
-                        <th>Action</th>
+                        <th>Return Date</th>
+                        <th>Fine</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +47,10 @@ height: 40px;
                         <td>{{books.book_name.publisher}}</td>
                         <td>{{books.book_name.book_isbn}}</td>
                         <td>{{books.issued_date}}</td>
-                        <td><a href="{% url 'deleteissuedbook' books.id %}" class="btn btn-danger bookIssuedDelete">Delete</a></td>
+                        <td>{{books.expiry_date}}</td>
+                        {% for data in details %}
+                        <td>₹{{data.6}}</td>
+                        {% endfor %}
                     </tr>
                     {% endfor %}
                 </tbody>

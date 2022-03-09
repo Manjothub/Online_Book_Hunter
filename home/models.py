@@ -1,7 +1,13 @@
+from datetime import datetime
 from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-# from django.contrib.auth.models import User
+from datetime import datetime,timedelta
+from . utils import student_verification_token
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+import uuid
 
 class CustomUser(AbstractUser):
     USER ={
@@ -10,6 +16,8 @@ class CustomUser(AbstractUser):
     }
     user_type = models.CharField(choices=USER,max_length=50,default=1)
     profile_pic = models.ImageField(upload_to='uploads/profile_pic/')
+    
+    
 
 
 class BookAuthor(models.Model):
@@ -34,11 +42,6 @@ class MainCategory(models.Model):
         return self.name
 
 
-class BookPrice(models.Model):
-    price= models.CharField(max_length=50,null=True)
-    
-    def __str__(self):
-        return str(self.price)
 
     
 class BookLanguage(models.Model):
@@ -63,7 +66,6 @@ class Book(models.Model):
     book_description = models.CharField(max_length=250, null=True)
     book_image = models.ImageField(upload_to = 'uploads/book-cover-images/',null=True,default="static/images/default-img.png")
     book_volume = models.CharField(max_length=50,null=True)
-    bookprice = models.ForeignKey(BookPrice,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return str(self.book_name)
@@ -72,6 +74,8 @@ class Book(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    is_email_verfied = models.BooleanField(default = False)
+    email_token = models.CharField(max_length=100,null=True,blank=True)
     student_dob = models.DateField(auto_now_add=False)
     gender= models.CharField(max_length=10)
     branch = models.CharField(max_length=10)
@@ -81,17 +85,31 @@ class Student(models.Model):
 
     def __str__(self):
         return str(self.user) + " ["+str(self.branch)+']' + " ["+str(self.roll_no)+']'
+    
+@receiver(post_save, sender=Student)
+def send_token(sender, instance, created, **kwargs):
+        if created:
+            token=uuid.uuid4()
+            useremail = instance.user.email
+            instance.email_token = token   
+            student_verification_token(useremail,token)
+                
+                
+        
+        
 
-   
+
+
+
+def expiry():
+    return datetime.today() + timedelta(days=14)   
 class IssuedBook(models.Model):
     student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
     book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
-    author_name = models.CharField(max_length=200,null=True)
-    isbn = models.CharField(max_length=13)
-    Volume = models.CharField(max_length=50,null=True)
-    category = models.CharField(max_length=100,null=True)
-    sub_category = models.CharField(max_length=100,null=True)
     issued_date = models.DateField(auto_now=True)
+    expiry_date = models.DateField(default=expiry)
+    
+
     
     
 class RequestBook(models.Model):

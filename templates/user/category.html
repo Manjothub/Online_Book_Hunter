@@ -59,7 +59,7 @@
                             <div class="product-details">
                                 <a href ="{% url 'bookdetials' book.id %}"><h6>{{book.book_name |truncatechars:13}}</h6> </a>
                                 <div class="price">
-                                    <h6> ₹{{book.bookprice}} </h6>
+                                    <h6> {{book.publisher}} </h6>
                                 </div>
                             </div>
                         </div>

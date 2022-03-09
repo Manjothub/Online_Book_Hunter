@@ -7,3 +7,7 @@
   .card-registration .select-arrow {
     top: 13px;
   }
+
+  ::placeholder{
+    font-size: 14px;
+  }

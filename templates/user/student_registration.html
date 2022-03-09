@@ -3,6 +3,7 @@
 {% block title %} Library Management System {% endblock %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/register.css' %}">
+
 {% endblock %}
 {% block body %}
 <!-- Start Header Area -->
@@ -48,28 +49,30 @@
                 <div class="card-body p-md-5 text-black">
                   {% include 'common/error.html '%}
                   <h3 class="mb-5 text-uppercase">Student registration form</h3>
-                <form method="POST" action="{% url 'student_registration' %}" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'student_registration' %}" enctype="multipart/form-data" class="was-validated">
                     {% csrf_token %}
                   <div class="row">
                       <div class="col-md-12">
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example1m" class="form-control form-control-lg" name="username" placeholder="Username" />
+                        <input type="text"  id="validationTextarea" class="form-control form-control-lg form-input" name="username" placeholder="Username" required />
+                        
                         
                       </div>
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example1m" class="form-control form-control-lg" name="first_name" placeholder="First Name" />
-                        
+                        <label>First Name</label>
+                        <input type="text"  id="customControlValidation3" class="form-control form-control-lg form-input" name="first_name" placeholder="First Name" required />    
                       </div>
                     
-                    
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example1n" class="form-control form-control-lg" name="last_name" placeholder="Last Name" />
+                        <label>Last Name</label>
+                        <input type="text" id="form3Example1n" class="form-control form-control-lg" name="last_name" placeholder="Last Name" required  />
                         
                       </div>
                     
                     
                         <div class="form-outline mb-4">
-                          <input type="text" id="form3Example1m1" class="form-control form-control-lg" name="phone" placeholder="Mobile Number" />
+                          <label>Phone</label>
+                          <input type="text"  class="form-control form-control-lg" name="phone" placeholder="Mobile Number" required />
                           
                         </div>
                       </div>
@@ -79,55 +82,46 @@
                     <div class="col-md-12">  
                     
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example1n1" class="form-control form-control-lg" name="branch" placeholder="Branch Name" />  
+                        <label>Branch</label>
+                        <input type="text" id="form3Example1n1" class="form-control form-control-lg" name="branch" placeholder="Branch Name" required />  
                       </div>
                     
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example1n1" class="form-control form-control-lg" name="roll_no" placeholder="Roll Number" /> 
+                        <label>Roll Number</label>
+                        <input type="text" id="form3Example1n1" class="form-control form-control-lg" name="roll_no" placeholder="Roll Number" required /> 
                       </div>
                     
                     <div class="form-outline mb-4">
-                        <input type="text" id="form3Example97" class="form-control form-control-lg" name="email" placeholder="Email" />
+                      <label>Email</label>
+                        <input type="email" id="form3Example97" class="form-control form-control-lg" name="email" placeholder="Email" required  />
+                      </div>
+
+                      <div class="mb-4">
+                        <label>Gender</label>
+                        <select class="form-select form-select-lg mb-4" name="gender" required aria-label="select Gender" required >
+                          <option value="">Gender</option>
+                          <option value="1">Male</option>
+                          <option value="2">Female</option>
+                          <option value="3">Other</option>
+                        </select>
                       </div>
                   </div>
                   
                   </div>
 
-                  <div class="row">
-                    <div class="col-md-12">
-                        <select class="form-outline mb-4" name="gender" style="height: 45px; width: 100%; font-size: 17px">
-                            <option disabled selected>Gender</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>other</option>
-                        </select>
-                    </div>
+                  <div class="form-outline mb-4">
+                    <label>Date of Birth</label>
+                    <input type="date" id="form3Example9" class="form-control form-control-lg" name="dob_student" required />
+                  </div>  
+                  <div class="mb-4">
+                    <label>Profilr Picture</label>
+                    <input type="file" class="form-control" aria-label="file example" name="image" required style="margin-left: -3%; border: none">
                   </div>
-
-                 <!-- <div class="row">
-                    <div class=" col-md-12">
-                        <select class="form-outline mb-4"  name="gender">
-                            <option>Select Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="FeMale">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                      </div>
-                 </div> -->
-
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example9">DOB</label>
-                    <input type="date" id="form3Example9" class="form-control form-control-lg" name="dob_student" />
+                    <input type="password" id="form3Example9" class="form-control form-control-lg" name="password" placeholder="Password" required />
                   </div>  
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example9">Image</label>
-                    <input type="file" id="form3Example9" class="form-control form-control-lg" name="image" />
-                  </div>  
-                  <div class="form-outline mb-4">
-                    <input type="password" id="form3Example9" class="form-control form-control-lg" name="password" placeholder="Password"/>
-                  </div>  
-                  <div class="form-outline mb-4">
-                    <input type="password" id="form3Example9" class="form-control form-control-lg" name="confirm_password" placeholder="Confirm Password" />
+                    <input type="password" id="form3Example9" class="form-control form-control-lg" name="confirm_password" placeholder="Confirm Password" required />
                   </div>  
                   <div class="d-flex justify-content-end pt-3">
                     <button type="submit" class="btn btn-warning btn-lg ms-2">Submit form</button>

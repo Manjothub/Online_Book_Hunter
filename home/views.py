@@ -50,12 +50,16 @@ def DOLOGIN(request):
         passw = request.POST.get('password')
         user = authenticate(username=username, password=passw)
         if user is not None:
-            login(request,user)
-            user_type=user.user_type
-            if user_type == '1':
-                return redirect('dashboardadmin')
-            elif user_type =='2':
-                return redirect('dashboardstudent')
+            cuser=CustomUser.objects.get(username=username)
+            stu=Student.objects.get(user=cuser)
+            if stu.is_email_verfied:
+                
+                login(request,user)
+                user_type=user.user_type
+                if user_type == '1':
+                    return redirect('dashboardadmin')
+                elif user_type =='2':
+                    return redirect('dashboardstudent')
             else:
                 messages.error(request,"Invalid Credentials")
                 return redirect('loginpage')
@@ -83,7 +87,6 @@ def ADDBOOK (request):
         author_name = request.POST.get('author_name')
         book_category = request.POST.get('category')
         book_main_category = request.POST.get('main_category')
-        book_sub_category = request.POST.get('sub_category')
         book_language = request.POST.get('language')
         reading_age = request.POST.get('reading_age')
         book_weight = request.POST.get('weight')
@@ -92,7 +95,6 @@ def ADDBOOK (request):
         book_volume = request.POST.get('volume')
         book_origin = request.POST.get('origin')
         book_desc = request.POST.get('description')
-        book_price = request.POST.get('price')
         checkbox = request.POST.get('check') == 'on'
         author = BookAuthor(
             author_name = author_name
@@ -108,10 +110,6 @@ def ADDBOOK (request):
         maincategory.save()
         
         
-        price = BookPrice(
-            price = book_price
-        )
-        price.save()
        
         language = BookLanguage(
             language = book_language
@@ -135,7 +133,6 @@ def ADDBOOK (request):
             book_description = book_desc,
             book_image = book_image,
             book_volume = book_volume,
-            bookprice = price,
         )
         
         book.save()
@@ -253,7 +250,6 @@ def UPDATEBOOKS(request):
         volume = request.POST.get('book_volume')
         image = request.FILES['book_image']
         origin = request.POST.get('book_origin')
-        price = request.POST.get('book_price')
         desc = request.POST.get('book_description')
         available = request.POST.get('book_status') =='on' 
         authors = BookAuthor(
@@ -265,10 +261,6 @@ def UPDATEBOOKS(request):
         )
         category.save()
         
-        bookprice = BookPrice(
-            price = price
-        )
-        bookprice.save()
         
         booklanguage = BookLanguage(
             language = language
@@ -291,7 +283,6 @@ def UPDATEBOOKS(request):
             book_description = desc,
             book_image = image,
             book_volume = volume,
-            bookprice = bookprice,
         )
         books.save()
         if books is not None:
@@ -318,6 +309,7 @@ def ISSUEBOOK(request):
         'books':books,
         'students':students
     }
+
     if request.method == 'POST':
         book_name=request.POST.get('book_name')
         author_name=request.POST.get('author')
@@ -360,12 +352,11 @@ def BOOKVIEWCATEGORY(request,items):
             'categories' : categories,
             'books':books
             }
-
         return render(request,'user/category.html',context)
-        
-    books = Book.objects.filter(category=items)
-    categories = BookCategory.objects.all()
-    context ={
+    else:
+        books = Book.objects.filter(category=items)
+        categories = BookCategory.objects.all()
+        context ={
             'categories' : categories,
             'books':books
             }
@@ -377,7 +368,9 @@ def BOOKDETAIL(request,id):
     product = Book.objects.filter(id=id)
     products = Book.objects.get(id=id)
     if request.user.is_authenticated:
-        stu=Student.objects.get(user=request.user)
+        user = request.user
+        print(user)
+        stu=Student.objects.get(user=user)
         show=RequestBook.objects.filter(Q(book_name=products) & Q(student_name=stu))
     else:
          return render(request,'common/login.html')
@@ -459,8 +452,25 @@ def STUDENTISSUEDBOOKS(request):
 @login_required(login_url = 'login')
 def VIEWISSUEDBOOK(request):
     issuedBooks = IssuedBook.objects.all()
+    details = []
+    for i in issuedBooks:
+        days = (date.today()-i.issued_date)
+        d=days.days
+        fine=0
+        if d>14:
+            day=d-14
+            fine=day*5
+            print('okkk')
+        books = list(Book.objects.filter(book_isbn=i.book_name.book_isbn))
+        students = list(Student.objects.filter(user=i.student_name.user))
+        i=0
+        for l in books:
+            t=(students[i].user,students[i].user_id,books[i].book_name,books[i].book_isbn,issuedBooks[0].issued_date,issuedBooks[0].expiry_date,fine)
+            i=i+1
+            details.append(t)
     context ={
-        'issuedBooks':issuedBooks
+        'issuedBooks':issuedBooks,
+        'details':details
     }
     return render(request,'admin/issued_books.html',context)
 
@@ -484,7 +494,7 @@ def STUDENTISSUEDBOOKS(request):
 def BOOKREQUEST(request,id):
     if request.method == 'POST':
             if request.user.is_authenticated:
-                user = request.user.id
+                user = request.user
                 student = Student.objects.get(user=user)
                 book = Book.objects.get(id=id)
                 bookrequest = RequestBook(
@@ -512,7 +522,12 @@ def STUDENTAPPROVEBOOK(request,id):
     bookrequests = RequestBook.objects.get(id=id)
     bookrequests.request_status = 1
     bookrequests.save()
-    messages.success(request,'Request Accepted')
+    if bookrequests.request_status == 1:
+        name = bookrequests.student_name
+        book = bookrequests.book_name
+        issue = IssuedBook(student_name =name,book_name=book)
+        issue.save()
+        messages.success(request,'Book Issued ')
     return redirect('requestedbooks')
 
 @login_required(login_url = 'login')
@@ -567,3 +582,14 @@ def STUDENTPROFILEUPDATE(request):
         except:
             messages.error(request,"Fail to update your Profile")
     return render(request,'user/edit_user_profile.html')
+
+def VERIFYSTUDENT(request,token):
+    students = Student.objects.get(email_token=token)
+    if students is not None:
+        students.is_email_verfied = True
+        students.save()
+        messages.success(request,'User Verfied')
+        return redirect('loginpage')
+    else:
+        messages.error(request,'Verify Your Email')
+        #make 404 page after that
