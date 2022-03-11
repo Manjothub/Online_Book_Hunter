@@ -43,7 +43,7 @@
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3>{{p.book_name}}</h3>
-                    <h2>₹ {{p.bookprice}}</h2>
+                    <h2>{{p.publisher}}</h2>
                     <ul class="list">
                         <li><a class="active" href="#"><span>Category</span> : {{p.main_category}}</a></li>
                         {% if p.book_status == True %}
@@ -53,16 +53,15 @@
                         {% endif %}
                     </ul>
                     <p>{{p.book_description}}</p>
+                    {% if show %}
                     <div class="card_area d-flex align-items-center">
-                        <form action="{% url 'saverequest' p.id %}" method="POST">
-                            {% csrf_token %}
-                            {% if show %}
-                            <button  type="submit" style="border: none; " disabled>Already Requested</button>
-                            {% else %}
-                            <button class="primary-btn" type="submit" style="border: none;">Request Book</button>
-                            {% endif %}
-                        </form>
+                        <button data-toggle="modal" data-target="#requestbookmodal"  style="border: none;" disabled>Already Requested</button>
                     </div>
+                    {% else %}
+                    <div class="card_area d-flex align-items-center">
+                        <button class="primary-btn" data-toggle="modal" data-target="#requestbookmodal"  style="border: none;">Request this Book</button>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -174,89 +173,51 @@
                 </div>
             </div>
 {% endfor %}
+<!--  Particular Book Comment Section Starts Here -->
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="comment_list">
+                            {% for comment in comments %}
                             <div class="review_item">
                                 <div class="media">
                                     <div class="d-flex">
-                                        <img src="{% static 'img/product/review-1.png' %}" alt="">
+                                        <img src="{{comment.studentname.user.profile_pic.url}}" alt="Image">
                                     </div>
                                     <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <h5>12th Feb, 2018 at 05:56 pm</h5>
-                                        <a class="reply_btn" href="#">Reply</a>
+                                        <h4>{{comment.studentname.user.first_name}}&nbsp;{{comment.studentname.user.last_name}}</h4>
+                                        <h5>{{comment.cmnt_date}}</h5>
+                                        <!-- <a class="reply_btn" href="#">Reply</a> -->
                                     </div>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                    commodo</p>
+                                <p>{{comment.comment}}</p>
                             </div>
-                            <div class="review_item reply">
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="{% static 'img/product/review-2.png' %}" alt="">
-                                    </div>
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <h5>12th Feb, 2018 at 05:56 pm</h5>
-                                        <a class="reply_btn" href="#">Reply</a>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                    commodo</p>
-                            </div>
-                            <div class="review_item">
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="{% static 'img/product/review-3.png' %}" alt="">
-                                    </div>
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <h5>12th Feb, 2018 at 05:56 pm</h5>
-                                        <a class="reply_btn" href="#">Reply</a>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                    commodo</p>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="review_box">
                             <h4>Post a comment</h4>
-                            <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number">
-                                    </div>
-                                </div>
+                            {% for p in product %}
+                            <form class="row contact_form" action="{% url 'addcomment' p.id %}" method="POST" id="contactForm" novalidate="novalidate">
+                                {% csrf_token %}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <textarea class="form-control" name="message" id="message" rows="1" placeholder="Message"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-right">
-                                    <button type="submit" value="submit" class="btn primary-btn">Submit Now</button>
+                                    <button type="submit"  class="btn primary-btn">Post</button>
                                 </div>
                             </form>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
+<!-- End Comment Section -->
+
+<!-- Student Review Section -->
             <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
                 <div class="row">
                     <div class="col-lg-6">
@@ -287,66 +248,48 @@
                             </div>
                         </div>
                         <div class="review_list">
+                            {% for review in userreview %}
                             <div class="review_item">
                                 <div class="media">
                                     <div class="d-flex">
-                                        <img src="img/product/review-1.png" alt="">
+                                        <img src="{{review.student_name.user.profile_pic.url}}" alt="">
                                     </div>
                                     <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
+                                        <h4>{{review.student_name.user.first_name}}&nbsp;{{review.student_name.user.last_name}}</h4>
+                                        {% if review.rating == 1 %}
+                                        <i class="fa fa-star"></i>
+                                        {% elif review.rating == 2 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% elif review.rating == 3 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% elif review.rating == 4 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% elif review.rating == 5 %}
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
+                                        {% else %}
+                                        <h4>No Ratings Given </h4>
+                                        {% endif %}
                                     </div>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                    commodo</p>
+                                <p>{{review.mesage}}</p>
                             </div>
-                            <div class="review_item">
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="img/product/review-2.png" alt="">
-                                    </div>
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                    commodo</p>
-                            </div>
-                            <div class="review_item">
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <img src="img/product/review-3.png" alt="">
-                                    </div>
-                                    <div class="media-body">
-                                        <h4>Blake Ruiz</h4>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                    commodo</p>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="review_box">
                             <h4>Add a Review</h4>
-                            <p>Your Rating:</p>
+                            <!-- <p>Your Rating:</p>
                             <ul class="list">
                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
@@ -354,38 +297,30 @@
                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
                             </ul>
-                            <p>Outstanding</p>
-                            <form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+                            <p>Outstanding</p> -->
+                            {% for p in product %}
+                            <form class="row contact_form" action="{% url 'addreview' p.id %}" method="POST" id="contactForm" novalidate="novalidate">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Full name'">
+                                        {% csrf_token %}
+                                                {{form}}
                                     </div>
-                                </div>
-                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="message" id="message" rows="1" placeholder="Review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea></textarea>
+                                        <textarea class="form-control" name="reviewmsg" id="message" rows="1" placeholder="Review" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-right">
-                                    <button type="submit" value="submit" class="primary-btn">Submit Now</button>
+                                    <button type="submit" class="primary-btn">Submit</button>
                                 </div>
                             </form>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+<!-- Book Review Section Ends Here -->
 </section>
 <!--================End Product Description Area =================-->
 
@@ -393,5 +328,32 @@
 <footer class="footer-area section_gap">
     {% include "includes/footer.html" %}
 </footer>
+
+{% for i in product  %}
+<!-- Request Book Modal Starts here -->
+  <div class="modal fade" id="requestbookmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Request Book</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'saverequest' i.id %}" method="POST">
+                {% csrf_token %}
+                <label for="">Select Upto Date</label><br>
+                <input type="date" class="form-control" name="uptodate">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit">Request</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
 <!-- End footer Area -->
 {% endblock %}

@@ -4,7 +4,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime,timedelta
 from . utils import student_verification_token
-
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import uuid
@@ -30,20 +29,17 @@ class BookAuthor(models.Model):
 
 class BookCategory(models.Model):
     category_name= models.CharField(max_length=100,null=True)
-    
     def __str__(self):
         return self.category_name
     
 class MainCategory(models.Model):
-    main_category = models.ForeignKey(BookCategory,on_delete=models.CASCADE)
+    main_category = models.ForeignKey(BookCategory,null=True,on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    
+    parent = models.ForeignKey('self',blank=True, null=True ,related_name='children',on_delete=models.CASCADE)
     def __str__(self):
         return self.name
 
 
-
-    
 class BookLanguage(models.Model):
     language= models.CharField(max_length=100,null=True)
     
@@ -93,30 +89,48 @@ def send_token(sender, instance, created, **kwargs):
             useremail = instance.user.email
             instance.email_token = token   
             student_verification_token(useremail,token)
-                
-                
-        
-        
-
-
-
-
-def expiry():
-    return datetime.today() + timedelta(days=14)   
-class IssuedBook(models.Model):
-    student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
-    book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
-    issued_date = models.DateField(auto_now=True)
-    expiry_date = models.DateField(default=expiry)
-    
-
     
     
 class RequestBook(models.Model):
     student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
     book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
     request_status = models.IntegerField(null=True,default=0)
+    upto_date = models.DateField(auto_now_add=False,null=True)
     button_value=models.BooleanField(default=False)
     
     def __str__(self):
         return str(self.student_name)
+    
+
+class IssuedBook(models.Model):
+    student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
+    book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
+    issued_date = models.DateField(auto_now=True)
+    date_return = models.DateField(auto_now_add=False,null=True)
+    def __str__(self):
+        return str(self.book_name) + str(self.student_name)
+
+class BookReview(models.Model):
+    RATING_CHOICES = (
+        (1, '⭐'),
+        (2, '⭐⭐'),
+        (3, '⭐⭐⭐'),
+        (4, '⭐⭐⭐⭐'),
+        (5, '⭐⭐⭐⭐⭐'),
+    )
+    book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
+    student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
+    pub_date = models.DateTimeField(auto_now=True)
+    rating = models.IntegerField(choices=RATING_CHOICES)
+    mesage = models.TextField(null=True)
+    def __str__(self):
+        return str(self.student_name) + str(self.rating)
+    
+
+class BookComment(models.Model):
+    bookname= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
+    studentname= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
+    cmnt_date = models.DateTimeField(auto_now=True)
+    comment = models.TextField(null=True)
+    def __str__(self):
+        return str(self.studentname) + str(self.comment)

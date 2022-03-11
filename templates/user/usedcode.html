@@ -1,0 +1,10 @@
+<div class="card_area d-flex align-items-center">
+    <form action="#" method="POST">
+        {% csrf_token %}
+        {% if show %}
+        <!-- <button  type="submit" style="border: none; " disabled>Already Requested</button> -->
+        {% else %}
+        <button class="primary-btn" data-toggle="modal" data-target="#requestbookmodal"  style="border: none;">Request Book</button>
+        {% endif %}
+    </form>
+</div>

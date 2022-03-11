@@ -42,5 +42,7 @@ urlpatterns = [
     path('student/profile/',STUDENTPROFILE,name ="studentprofile"),
     path('student/profile/update',STUDENTPROFILEUPDATE,name ="studentprofileupdate"),
     path('verify-email/<token>',VERIFYSTUDENT,name ="verifystudent"),
+    path('addcomments/<int:id>',ADDCOMMENT,name ="addcomment"),
+    path('addreview/<int:id>',ADDREVIEW,name ="addreview"),
     
     ]

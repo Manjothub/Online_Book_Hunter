@@ -32,7 +32,6 @@ height: 40px;
                         <th>ISBN</th>
                         <th>Issued Date</th>
                         <th>Return Date</th>
-                        <th>Fine</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,10 +46,7 @@ height: 40px;
                         <td>{{books.book_name.publisher}}</td>
                         <td>{{books.book_name.book_isbn}}</td>
                         <td>{{books.issued_date}}</td>
-                        <td>{{books.expiry_date}}</td>
-                        {% for data in details %}
-                        <td>₹{{data.6}}</td>
-                        {% endfor %}
+                        <td>{{books.date_return}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

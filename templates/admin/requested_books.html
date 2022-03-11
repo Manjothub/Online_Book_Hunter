@@ -27,6 +27,7 @@ height: 40px;
                         <th>Department</th>
                         <th>Roll No</th>
                         <th>Book Name</th>
+                        <th>Time Period</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -38,6 +39,7 @@ height: 40px;
                         <td>{{books.student_name.branch}}</td>
                         <td>{{books.student_name.roll_no}}</td>
                         <td>{{books.book_name}}</td>
+                        <td>{{books.upto_date}}</td>
                         <td>
                             <div class="actions">
                                 {% if books.request_status == 0 %}

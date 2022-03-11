@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 import json
 from django.db.models import Q
 from .forms import *
-
+from django.db.models import Avg
 
 
 def INDEX(request):
@@ -50,20 +50,22 @@ def DOLOGIN(request):
         passw = request.POST.get('password')
         user = authenticate(username=username, password=passw)
         if user is not None:
-            cuser=CustomUser.objects.get(username=username)
-            stu=Student.objects.get(user=cuser)
-            if stu.is_email_verfied:
-                
                 login(request,user)
                 user_type=user.user_type
                 if user_type == '1':
                     return redirect('dashboardadmin')
                 elif user_type =='2':
-                    return redirect('dashboardstudent')
-            else:
-                messages.error(request,"Invalid Credentials")
-                return redirect('loginpage')
+                    cuser=CustomUser.objects.get(username=username)
+                    stu=Student.objects.get(user=cuser)
+                    if stu.is_email_verfied:
+                        return redirect('dashboardstudent')
+                    else:
+                        messages.warning(request,'Verify your Email First')
+                        return redirect('loginpage')
         else:
+                    messages.error(request,"Invalid Credentials")
+                    return redirect('loginpage')
+    else:
             messages.error(request,"Invalid Credentials")
             return redirect('loginpage')
         
@@ -369,14 +371,21 @@ def BOOKDETAIL(request,id):
     products = Book.objects.get(id=id)
     if request.user.is_authenticated:
         user = request.user
-        print(user)
         stu=Student.objects.get(user=user)
         show=RequestBook.objects.filter(Q(book_name=products) & Q(student_name=stu))
+        cmnt = BookComment.objects.filter(bookname=products)
+        form = UserReviewForm()
+        userreview = BookReview.objects.filter(book_name=products)
+        
     else:
          return render(request,'common/login.html')
     context ={
         'product':product,
-        'show':show
+        'show':show,
+        'comments':cmnt,
+        'form':form,
+        'userreview':userreview
+
     }
     return render(request,'user/product_detail.html',context)
 
@@ -422,6 +431,7 @@ def STUDENTREGISTER(request):
         if student is not None:
             student.save()
             messages.success(request,'Account Created Successfully')
+            messages.success(request,'Email has been send to your mail for verification')
             return redirect('loginpage')
         else:
             messages.error(request,'Some error occured')
@@ -452,25 +462,8 @@ def STUDENTISSUEDBOOKS(request):
 @login_required(login_url = 'login')
 def VIEWISSUEDBOOK(request):
     issuedBooks = IssuedBook.objects.all()
-    details = []
-    for i in issuedBooks:
-        days = (date.today()-i.issued_date)
-        d=days.days
-        fine=0
-        if d>14:
-            day=d-14
-            fine=day*5
-            print('okkk')
-        books = list(Book.objects.filter(book_isbn=i.book_name.book_isbn))
-        students = list(Student.objects.filter(user=i.student_name.user))
-        i=0
-        for l in books:
-            t=(students[i].user,students[i].user_id,books[i].book_name,books[i].book_isbn,issuedBooks[0].issued_date,issuedBooks[0].expiry_date,fine)
-            i=i+1
-            details.append(t)
     context ={
         'issuedBooks':issuedBooks,
-        'details':details
     }
     return render(request,'admin/issued_books.html',context)
 
@@ -497,9 +490,11 @@ def BOOKREQUEST(request,id):
                 user = request.user
                 student = Student.objects.get(user=user)
                 book = Book.objects.get(id=id)
+                date = request.POST.get('uptodate')
                 bookrequest = RequestBook(
                     student_name = student,
                     book_name = book,
+                    upto_date =date,
                     button_value=True
                 )
                 bookrequest.save()
@@ -520,12 +515,14 @@ def VIEWREQUESTEDBOOKS(request):
 @login_required(login_url = 'login')
 def STUDENTAPPROVEBOOK(request,id):
     bookrequests = RequestBook.objects.get(id=id)
+    print(bookrequests)
     bookrequests.request_status = 1
     bookrequests.save()
     if bookrequests.request_status == 1:
         name = bookrequests.student_name
         book = bookrequests.book_name
-        issue = IssuedBook(student_name =name,book_name=book)
+        date = bookrequests.upto_date
+        issue = IssuedBook(student_name =name,book_name=book,date_return=date)
         issue.save()
         messages.success(request,'Book Issued ')
     return redirect('requestedbooks')
@@ -584,12 +581,46 @@ def STUDENTPROFILEUPDATE(request):
     return render(request,'user/edit_user_profile.html')
 
 def VERIFYSTUDENT(request,token):
-    students = Student.objects.get(email_token=token)
-    if students is not None:
+    try:
+        students = Student.objects.get(email_token=token)
         students.is_email_verfied = True
         students.save()
         messages.success(request,'User Verfied')
         return redirect('loginpage')
+    except Exception as e:
+        return render(request,'common/errorpage404.html')
+
+def ADDCOMMENT(request,id):
+    if request.method =='POST':
+        user = request.user
+        student = Student.objects.get(user=user)
+        book = Book.objects.get(id=id)
+        msg = request.POST.get('message')
+        cmnt = BookComment(
+            bookname = book,
+            studentname = student,
+            comment = msg
+        )
+        cmnt.save()
+        messages.success(request,'Comment Posted Sucessfully')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
-        messages.error(request,'Verify Your Email')
-        #make 404 page after that
+        return redirect('bookdetails')
+    
+def ADDREVIEW(request,id):
+    if request.method =='POST':
+        user = request.user
+        student = Student.objects.get(user=user)
+        book = Book.objects.get(id=id)
+        reviewmsg= request.POST.get('reviewmsg')
+        form = UserReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit = False)
+            review.book_name =book
+            review.student_name = student
+            review.mesage = reviewmsg
+            review.save()
+            messages.success(request,'Review Added Sucessfully')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        return redirect('bookdetails')
