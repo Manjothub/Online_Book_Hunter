@@ -16,8 +16,7 @@
 					<h1> Books Category </h1>
 					<nav class="d-flex align-items-center">
 						<a href="{% url 'index' %}">Home<span class="lnr lnr-arrow-right"></span></a>
-						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
-			
+						<a href="#">Shop</a>
 					</nav>
 				</div>
 			</div>
@@ -31,18 +30,29 @@
         <div class="col-xl-3 col-lg-4 col-md-5">
             <div class="sidebar-categories">
                 <div class="head"><a href="{% url 'viewbookscategory' 0  %}" style="color:white">All Categories</a></div>
-                {% for i in categories %}
                 <ul class="main-categories">
+                    {% for i in categories %}
+                    {% if i.children.all %}
                     <li class="main-nav-list"><a class="border-bottom-0" data-toggle="collapse" href="#cat-{{i}}" aria-expanded="false"
                          aria-controls="categories"><span class="lnr lnr-arrow-right"></span>{{i.category_name}}<span class="number"></span></a>
-                         {% for cat in i.maincategory_set.all %}
+                         {% for obj in i.children.all %} 
+                         {% if obj in i.children.all %}
                          <ul class="collapse" id="cat-{{i}}" data-toggle="collapse" aria-expanded="false" aria-controls="booksmaincategories">
-                            <li class="main-nav-list child"><a href=" {% url 'viewbookscategory' items=i.id %}">{{cat.name}}<span class="number"></span></a></li>
+                            <li class="main-nav-list child"><a href="{% url 'viewbookscategory' items=obj.id %}">{{obj.category_name}}</a><span class="number"></span></li>
                         </ul>
+                        {% endif %}
                         {% endfor %}
-                    </li>
+                        {% for subobj in i.children.all %}
+                        {% if subobj in obj.children.all %}
+                        <ul class="collapse" id="cat-{{i}}" data-toggle="collapse" aria-expanded="false" aria-controls="booksmaincategories">
+                            <li class="main-nav-list child"><a href="{% url 'viewbookscategory' items=obj.id %}">{{subobj.category_name}}</a><span class="number"></span></li>
+                        </ul>
+                        {% endif %}
+                        {% endfor %}
+                    </li> 
+                    {% endif %}
+                    {% endfor %}
                 </ul>
-                {% endfor %}
             </div>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7">

@@ -45,7 +45,7 @@
                     <h3>{{p.book_name}}</h3>
                     <h2>{{p.publisher}}</h2>
                     <ul class="list">
-                        <li><a class="active" href="#"><span>Category</span> : {{p.main_category}}</a></li>
+                        <li><a class="active" href="#"><span>Category</span> : {{p.category.parent}}</a></li>
                         {% if p.book_status == True %}
                         <li><a href="#"><span>Availibility</span> : In Stock</a></li>
                         {% else %}

@@ -53,7 +53,7 @@ height: 40px;
                                 <td>{{book.book_dimensions}}</td>
                                 <td>{{book.book_origin}}</td>
                                 <td>{{book.category.category_name}}</td>
-                                <td>{{book.book_description}}</td>
+                                <td>{{book.book_description|truncatechars:15}}</td>
                                 <td><img src="{{book.book_image.url}}" alt=""></td>
                                 <td>{{book.book_volume}}</td>
                                 <td>{{book.bookprice.price}}</td>

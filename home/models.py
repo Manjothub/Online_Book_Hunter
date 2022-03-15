@@ -29,16 +29,16 @@ class BookAuthor(models.Model):
 
 class BookCategory(models.Model):
     category_name= models.CharField(max_length=100,null=True)
-    def __str__(self):
-        return self.category_name
-    
-class MainCategory(models.Model):
-    main_category = models.ForeignKey(BookCategory,null=True,on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
     parent = models.ForeignKey('self',blank=True, null=True ,related_name='children',on_delete=models.CASCADE)
-    def __str__(self):
-        return self.name
-
+    
+    def __str__(self):                           
+        full_path = [self.category_name]                  
+        k = self.parent
+        while k is not None:
+            full_path.append(k.category_name)
+            k = k.parent
+        return ' -> '.join(full_path[::-1])
+    
 
 class BookLanguage(models.Model):
     language= models.CharField(max_length=100,null=True)
@@ -56,8 +56,7 @@ class Book(models.Model):
     book_weight = models.CharField(max_length=100,null=True)
     book_dimensions = models.CharField(max_length=100,null=True)
     book_origin = models.CharField(max_length=50,null=True)
-    category = models.ForeignKey(BookCategory,on_delete=models.CASCADE,null=True)
-    main_category = models.ForeignKey(MainCategory,on_delete=models.CASCADE,null=True)
+    category = models.ForeignKey(BookCategory, null=True, blank=True,on_delete=models.CASCADE)
     book_status = models.BooleanField(default= True)
     book_description = models.CharField(max_length=250, null=True)
     book_image = models.ImageField(upload_to = 'uploads/book-cover-images/',null=True,default="static/images/default-img.png")
@@ -65,6 +64,7 @@ class Book(models.Model):
 
     def __str__(self):
         return str(self.book_name)
+    
     
     
 

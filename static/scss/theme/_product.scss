@@ -1574,11 +1574,15 @@
 
 /* Login form Area css
 ============================================================================================ */
+.login_box_img img{
+	height: auto;
+}
 .login_box_area{
 	.login_box_img{
 		margin-right: -30px;
 		position: relative;
 		img{
+			// height: auto;
 			width: 100%;
 		}
 		&:before{

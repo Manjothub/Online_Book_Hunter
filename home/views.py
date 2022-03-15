@@ -88,7 +88,6 @@ def ADDBOOK (request):
         publish_date = request.POST.get('publish_date')
         author_name = request.POST.get('author_name')
         book_category = request.POST.get('category')
-        book_main_category = request.POST.get('main_category')
         book_language = request.POST.get('language')
         reading_age = request.POST.get('reading_age')
         book_weight = request.POST.get('weight')
@@ -104,13 +103,6 @@ def ADDBOOK (request):
         author.save()
         
         categorys = BookCategory.objects.get(id =book_category)
-        
-        maincategory = MainCategory(
-            main_category = categorys,
-            name = book_main_category
-        )
-        maincategory.save()
-        
         
        
         language = BookLanguage(
@@ -130,7 +122,6 @@ def ADDBOOK (request):
             book_dimensions = book_dimensions,
             book_origin = book_origin,
             category = categorys,
-            main_category = maincategory,
             book_status = checkbox,
             book_description = book_desc,
             book_image = book_image,
@@ -170,19 +161,33 @@ def VIEWAUTHORS(request):
 def ADDCATEGORIES(request):
     if request.method == 'POST':
         name = request.POST.get('categoryname')
-        category = BookCategory(
-            category_name = name
-        )
-        if category is not None:
-            if BookCategory.objects.filter(category_name=category).exists():
-                messages.warning(request,'Category is already Taken')
-                return redirect('addcategories')
+        id = request.POST.get('category')
+        try:
+            sub_category = BookCategory.objects.get(id=id)
+            category = BookCategory(
+                category_name = name,
+                parent=sub_category
+            )
+            if category is not None:
+                if BookCategory.objects.filter(category_name=category).exists():
+                    messages.warning(request,'Category is already Taken')
+                    return redirect('addcategories')
+                else:
+                    category.save()
+                    messages.success(request,'Category Added')
             else:
+                messages.error(request,'Fields needs to be checked')
+        except:
+                category = BookCategory(
+                category_name = name,   
+            )
                 category.save()
                 messages.success(request,'Category Added')
-        else:
-            messages.error(request,'Fields needs to be checked')
-    return render(request,'admin/add_categories.html')
+    categories = BookCategory.objects.all()
+    context ={
+        'categories':categories
+    }
+    return render(request,'admin/add_categories.html',context)
 
 @login_required(login_url = 'login')
 def VIEWCATEGORIES(request):
@@ -240,6 +245,7 @@ def EDITBOOKS(request,id):
 @login_required(login_url = 'login')
 def UPDATEBOOKS(request):
     if request.method == 'POST':
+        id= request.POST.get('book_id')
         book_name = request.POST.get('book_name')
         isbn = request.POST.get('book_isbn')
         publish_date = request.POST.get('publication_date')
@@ -271,6 +277,7 @@ def UPDATEBOOKS(request):
         booklanguage.save()
         
         books = Book(
+            id = id,
             book_name = book_name,
             book_isbn = isbn,
             publisher = authors,
@@ -286,12 +293,12 @@ def UPDATEBOOKS(request):
             book_image = image,
             book_volume = volume,
         )
-        books.save()
-        if books is not None:
+        if books:
             messages.success(request,'Data Updated')
+            books.save()
             return redirect('viewbook')
         else:
-            messages.error(request, 'something went wrong')
+            messages.error(request,'Something went wrong')
             return redirect('editbook')
     return render(request,'admin/edit_book.html')
 
@@ -348,19 +355,19 @@ def ISSUEBOOK(request):
 
 def BOOKVIEWCATEGORY(request,items):
     if items == 0:
-        categories = BookCategory.objects.all()
+        categories = BookCategory.objects.filter(parent=None)
         books = Book.objects.all()
         context ={
             'categories' : categories,
-            'books':books
+            'books':books,
             }
         return render(request,'user/category.html',context)
     else:
+        categories = BookCategory.objects.filter(parent=None)
         books = Book.objects.filter(category=items)
-        categories = BookCategory.objects.all()
         context ={
+            'books':books,
             'categories' : categories,
-            'books':books
             }
     return render(request,'user/category.html',context)
 

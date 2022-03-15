@@ -21,25 +21,18 @@ height: 40px;
                     <table id="dataTable3" class="text-center">
                         <thead class="text-capitalize">
                             <tr>
-                                <th> Book Category</th>
+                                <th>Category</th>
+                                <th>Sub Category</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for cat in categories %}
+                            {% for cat in categories|dictsort:"parent" %}
+                            {% for i in cat.list %}
                             <tr>
-                                <td>{{cat.category_name }}</td>
-                                <td class="text-right">
-                                    <div class="actions">
-                                       <a href="{% url 'editcategories' cat.id %}" class="btn-edit" style="padding: 5px; font-size: 17px;">
-                                       <i class="fas fa-pen"></i>
-                                       </a>
-                                       <a href="{% url 'deletecategories' cat.id %}" class="btn-delete" style="padding: 5px; font-size: 17px;">
-                                       <i class="fas fa-trash"></i>
-                                       </a>
-                                    </div>
-                                </td>
-                            </tr>
+                                {% ifchanged %}<td rowspan="{{ group.list|length }}">{{ i.name }}</td>{% endifchanged %}
+                              </tr>
+                            {% endfor %}
                             {% endfor %}
                         </tbody>
                     </table>
