@@ -146,3 +146,142 @@
                 </li> 
                 {% endif %}
                 {% endfor %}
+
+
+
+
+
+
+                {% for i in categories %}
+                {% if i.children.all %}
+                <li class="main-nav-list"><a class="border-bottom-0" data-toggle="collapse" href="#cat-{{i}}" aria-expanded="false"
+                     aria-controls="categories"><span class="lnr lnr-arrow-right"></span>{{i.category_name}}<span class="number"></span></a>
+                     {% for obj in i.children.all %} 
+                     {% if obj in i.children.all %}
+                     <ul class="collapse" id="cat-{{i}}" data-toggle="collapse" aria-expanded="false" aria-controls="booksmaincategories">
+                        <li class="main-nav-list child"><a href="{% url 'viewbookscategory' items=obj.id %}">{{obj.category_name}}</a><span class="number"></span></li>
+                    </ul>
+                    {% endif %}
+                    {% endfor %}
+                    {% for subobj in i.children.all %}
+                    {% for t in subobj.children.all %}
+                    {% for s in t.children.all %}
+                    {{s}}
+                    {% endfor %}
+                    {% endfor %}
+                    {% if subobj in obj.children.all %}
+                    <ul class="collapse" id="cat-{{i}}" data-toggle="collapse" aria-expanded="false" aria-controls="booksmaincategories">
+                        <li class="main-nav-list child"><a href="{% url 'viewbookscategory' items=obj.id %}">{{subobj.category_name}}</a><span class="number"></span></li>
+                    </ul>
+                    
+                    {% endif %}
+                    {% endfor %}
+                </li> 
+                {% endif %}
+                {% endfor %}
+
+
+
+                <!DOCTYPE html>
+                <html lang="en">
+                  <head>
+                    {% load static %}
+                    <meta charset="UTF-8" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                    <link
+                      rel="stylesheet"
+                      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+                    />
+                    <link rel="stylesheet" href="{% static 'css/banner.css' %} " />
+                    <title>Design Check</title>
+                  </head>
+                  <body>
+                    <div class="container max">
+                        <div class="sidebar">
+                          <div
+                            style="background: linear-gradient(229.99deg, #11dee9 -26%, #017e8b 145%);">
+                            <h1>Snow in the desert</h1>
+                            <p>Love, death & robots</p>
+                          </div>
+                          <div
+                            style="background: linear-gradient(215.32deg, #f90306 -1%, #9e0706 124%);">
+                            <h1>Life Hutch</h1>
+                            <p>Love, death & robots</p>
+                          </div>
+                          <div style="background: linear-gradient(221.87deg, #8308ea 1%, #5305af 128%);">
+                            <h1>Zima Blue</h1>
+                            <p>Love, death & robots</p>
+                          </div>
+                          <div style="background: linear-gradient(220.16deg, #ffe101 -8%, #f39102 138%);">
+                            <h1>Automated Customer Service</h1>
+                            <p>Love, death & robots</p>
+                          </div>
+                        </div>
+                        <div class="main-slide">
+                          <div style="background-image: url('https://images.unsplash.com/photo-1601574968106-b312ac309953?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1996&q=80');"></div>
+                          <div style="background-image: url('https://images.unsplash.com/photo-1511447333015-45b65e60f6d5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2023&q=80');"></div>
+                          <div style="background-image: url('https://images.unsplash.com/photo-1501529301789-b48c1975542a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');"></div>
+                          <div style="background-image: url('https://images.unsplash.com/photo-1520263115673-610416f52ab6?ixlib=rb-1.2.1&ixid=MnwxMjAfDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');"></div>
+                        </div>
+                        <div class="controls">
+                          <button class="down-button">
+                            <i class="fas fa-arrow-down"></i>
+                          </button>
+                          <button class="up-button">
+                            <i class="fas fa-arrow-up"></i>
+                          </button>
+                        </div>
+                      </div>
+                
+                    <script>
+                      const upBtn = document.querySelector(".up-button");
+                      const downBtn = document.querySelector(".down-button");
+                      const sidebar = document.querySelector(".sidebar");
+                      const container = document.querySelector(".container");
+                      const mainSlide = document.querySelector(".main-slide");
+                      const slidesCount = mainSlide.querySelectorAll("div").length;
+                
+                      let activeSlideIndex = 0;
+                
+                      sidebar.style.top = `-${(slidesCount - 1) * 100}vh`;
+                
+                      upBtn.addEventListener("click", () => {
+                        changeSlide("up");
+                      });
+                
+                      downBtn.addEventListener("click", () => {
+                        changeSlide("down");
+                      });
+                
+                      document.addEventListener("keydown", (event) => {
+                        if (event.key === "ArrowUp") {
+                          changeSlide("up");
+                        } else if (event.key === "ArrowDown") {
+                          changeSlide("down");
+                        }
+                      });
+                
+                      function changeSlide(direction) {
+                        if (direction === "up") {
+                          activeSlideIndex++;
+                          if (activeSlideIndex === slidesCount) {
+                            activeSlideIndex = 0;
+                          }
+                        } else if (direction === "down") {
+                          activeSlideIndex--;
+                          if (activeSlideIndex < 0) {
+                            activeSlideIndex = slidesCount - 1;
+                          }
+                        }
+                
+                        const height = container.clientHeight;
+                
+                        mainSlide.style.transform = `translateY(-${
+                          activeSlideIndex * height
+                        }px)`;
+                        sidebar.style.transform = `translateY(${activeSlideIndex * height}px)`;
+                      }
+                    </script>
+                  </body>
+                </html>
+                

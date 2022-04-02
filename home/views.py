@@ -355,20 +355,28 @@ def ISSUEBOOK(request):
 
 def BOOKVIEWCATEGORY(request,items):
     if items == 0:
-        categories = BookCategory.objects.filter(parent=None)
+        categories = BookCategory.objects.select_related().all()
         books = Book.objects.all()
         context ={
             'categories' : categories,
             'books':books,
             }
+        for c in categories:
+            print (c.parent)
         return render(request,'user/category.html',context)
     else:
-        categories = BookCategory.objects.filter(parent=None)
+        categories = BookCategory.objects.select_related().all()
+    
         books = Book.objects.filter(category=items)
         context ={
             'books':books,
             'categories' : categories,
             }
+        for c in categories:
+            if c.parent is None:
+                print ('no')
+            else:
+                print(c.parent)
     return render(request,'user/category.html',context)
 
 
@@ -631,3 +639,6 @@ def ADDREVIEW(request,id):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         return redirect('bookdetails')
+    
+def DESIGN(request):
+    return render(request,'common/design.html')

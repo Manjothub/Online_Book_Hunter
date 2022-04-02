@@ -44,5 +44,5 @@ urlpatterns = [
     path('verify-email/<token>',VERIFYSTUDENT,name ="verifystudent"),
     path('addcomments/<int:id>',ADDCOMMENT,name ="addcomment"),
     path('addreview/<int:id>',ADDREVIEW,name ="addreview"),
-    
+    path('design',DESIGN,name="design")
     ]

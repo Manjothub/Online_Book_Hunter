@@ -1,57 +1,91 @@
 {% load static %}
-<div class="container">
-  <div class="row fullscreen align-items-center justify-content-start">
-    <div class="col-lg-12">
-      <div class="active-banner-slider owl-carousel">
-        <!-- single-slide -->
-        <div class="row single-slide align-items-center d-flex">
-          <div class="col-lg-5 col-md-6">
-            <div class="banner-content">
-              <h1>Autobiography <br />Collection!</h1>
-              <p>
-                'The Wings of Fire' was first published in the year 2000.
-                Mr Tiwari is a well-known missile scientist who has worked with
-                Dr. Kalam. Having become a bestseller, the book has even been
-                translated into thirteen languages, which includes Chinese and
-                French.
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-7">
-            <div class="banner-img">
-              <img
-                 style="max-width: 100%; height: auto;"
-                src="{% static 'images/banner_img1.jpg' %}"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
-        <!-- single-slide -->
-        <div class="row single-slide">
-          <div class="col-lg-5" style="margin-top: 23%">
-            <div class="banner-content">
-              <h1>Autobiography<br />Collection!</h1>
-              <p>
-                An international bestseller which has sold over a million copies
-                in the UK, Dreams From My Father is a refreshing, revealing
-                portrait of a young man asking big questions about identity and
-                belonging.
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-7">
-            <div class="banner-img">
-              <!-- <img class="img-fluid" src="{% static 'img/banner/banner-img.png' %}" alt=""> -->
-              <img
-              style="max-width: 100%; height: auto;"
-                src="{% static 'images/banner_img2.jpg' %}"
-                alt=""
-              />
-            </div>
-          </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+  <link rel="stylesheet" href="{% static 'css/banner.css' %}">
+</head>
+<body>
+  <section class="banner-area">
+    <div class="container-slider">
+      <div class="sidebar-heading">
+        <div>
+          <h1>AutoBiography Collection</h1>
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, nulla incidunt. Mollitia beatae optio a maxime sint, aliquam officiis reiciendis doloribus fugit repellendus reprehenderit atque? Assumenda neque possimus provident incidunt.</p>
         </div>
       </div>
+      <div class="main-slide">
+        <!-- <div style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80');"></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1540390769625-2fc3f8b1d50c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80');"></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1489493512598-d08130f49bea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80');"></div>
+        <div style="background-image: url('https://images.unsplash.com/photo-1518021964703-4b2030f03085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80');"></div> -->
+        <div><img style="max-width: 100%; height: auto;" src="{% static 'images/banner_img1.jpg' %}" alt=""/></div>
+        <div><img style="max-width: 100%; height: auto;" src="{% static 'images/banner_img2.jpg' %}" alt=""/></div>
+      </div>
+      <div class="controls">
+        <button class="down-button">
+          <i class="fas fa-arrow-down"></i>
+        </button>
+        <button class="up-button">
+          <i class="fas fa-arrow-up"></i>
+        </button>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
+  <script>
+    const downButton = document.querySelector('.down-button');
+const upButton = document.querySelector('.up-button');
+const sidebar = document.querySelector('.sidebar');
+const mainSlide = document.querySelector('.main-slide');
+const slidesCount = mainSlide.querySelectorAll('div').length;
+const container = document.querySelector('.container');
+
+let activeSlideIndex = 0;
+
+sidebar.style.top = `-${(slidesCount - 1) * 100}vh`;
+
+function changeSlide(direction) {
+if (direction === 'up') {
+  activeSlideIndex++;
+  if (activeSlideIndex === slidesCount) {
+    activeSlideIndex = 0;
+  }
+}
+
+else if (direction === 'down') {
+  activeSlideIndex--;
+  if (activeSlideIndex < 0) {
+    activeSlideIndex = slidesCount -1;
+  }
+}
+
+const height = container.clientHeight;
+
+
+mainSlide.style.transform = `translateY(-${activeSlideIndex * height}px)`;
+sidebar.style.transform = `translateY(${activeSlideIndex * height}px)`;
+}
+
+
+downButton.addEventListener('click', () => {
+changeSlide('down');
+});
+
+upButton.addEventListener('click', () => {
+changeSlide('up');
+});
+
+document.addEventListener('keydown', event => {
+if (event.key === 'ArrowUp') {
+  changeSlide('up');
+}
+else if (event.key === 'ArrowDown') {
+  changeSlide('down');
+}
+});
+</script>
+</body>
+</html>
