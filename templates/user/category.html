@@ -31,7 +31,60 @@
             <div class="sidebar-categories">
                 <div class="head"><a href="{% url 'viewbookscategory' 0  %}" style="color:white">All Categories</a></div>
                 <ul class="main-categories">
-                   
+                    {% for i in categories %}
+                {% if i.children.all %}
+                <li class="main-nav-list"><a class="border-bottom-0" data-toggle="collapse" href="#cat-{{i}}" aria-expanded="false"
+                     aria-controls="categories"><span class="lnr lnr-arrow-right"></span>{{i.category_name}}<span class="number"></span></a>
+                     {% for obj in i.children.all %} 
+                     {% if obj in i.children.all %}
+                     <ul class="collapse" id="cat-{{i}}" data-toggle="collapse" aria-expanded="false" aria-controls="booksmaincategories">
+                        <li class="main-nav-list child"><a href="{% url 'viewbookscategory' items=obj.id %}">{{obj.category_name}}</a><span class="number"></span></li>
+                    </ul>
+                    {% endif %}
+                    {% endfor %}
+                    {% for subobj in i.children.all %}
+                    {% if subobj in obj.children.all %}
+                    <ul class="collapse" id="cat-{{i}}" data-toggle="collapse" aria-expanded="false" aria-controls="booksmaincategories">
+                        <li class="main-nav-list child"><a href="{% url 'viewbookscategory' items=obj.id %}">{{subobj.category_name}}</a><span class="number"></span></li>
+                    </ul>
+                    {% endif %}
+                    {% endfor %}
+                </li> 
+                {% endif %}
+                {% endfor %}
+
+
+
+
+
+
+                {% for i in categories %}
+                {% if i.children.all %}
+                <li class="main-nav-list"><a class="border-bottom-0" data-toggle="collapse" href="#cat-{{i}}" aria-expanded="false"
+                     aria-controls="categories"><span class="lnr lnr-arrow-right"></span>{{i.category_name}}<span class="number"></span></a>
+                     {% for obj in i.children.all %} 
+                     {% if obj in i.children.all %}
+                     <ul class="collapse" id="cat-{{i}}" data-toggle="collapse" aria-expanded="false" aria-controls="booksmaincategories">
+                        <li class="main-nav-list child"><a href="{% url 'viewbookscategory' items=obj.id %}">{{obj.category_name}}</a><span class="number"></span></li>
+                    </ul>
+                    {% endif %}
+                    {% endfor %}
+                    {% for subobj in i.children.all %}
+                    {% for t in subobj.children.all %}
+                    {% for s in t.children.all %}
+                    {{s}}
+                    {% endfor %}
+                    {% endfor %}
+                    {% if subobj in obj.children.all %}
+                    <ul class="collapse" id="cat-{{i}}" data-toggle="collapse" aria-expanded="false" aria-controls="booksmaincategories">
+                        <li class="main-nav-list child"><a href="{% url 'viewbookscategory' items=obj.id %}">{{subobj.category_name}}</a><span class="number"></span></li>
+                    </ul>
+                    
+                    {% endif %}
+                    {% endfor %}
+                </li> 
+                {% endif %}
+                {% endfor %} 
                 </ul>
             </div>
         </div>
