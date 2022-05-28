@@ -61,7 +61,7 @@ def DOLOGIN(request):
                         return redirect('dashboardstudent')
                     else:
                         messages.warning(request,'Verify your Email First')
-                        return redirect('loginpage')
+                        return redirect('dashboardstudent')
         else:
                     messages.error(request,"Invalid Credentials")
                     return redirect('loginpage')

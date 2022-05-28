@@ -27,13 +27,13 @@ height: 40px;
                             </tr>
                         </thead>
                         <tbody>
-                            {% for cat in categories|dictsort:"parent"
-                            {% for i in cat.list %}
+                            {% for i in categories %}    
                             <tr>
-                                {% ifchanged %}<td rowspan="{{ group.list|length }}">{{ i.name }}</td>{% endifchanged %}
-                              </tr>
-                            {% endfor %}
-                            {% endfor %}
+                                <td>{{i.category_name}}</td>
+                                <td> Sub Category</td>
+                                <td>Actions</td>
+                            </tr>            
+                            {% endfor %}        
                         </tbody>
                     </table>
                 </div>

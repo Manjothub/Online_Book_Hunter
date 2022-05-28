@@ -1,91 +1,51 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
-  <!-- <link rel="stylesheet" href="{% static 'css/banner.css' %}"> -->
-</head>
-<body>
-  <section class="banner-area">
-    <div class="container-slider">
-      <div class="sidebar-heading">
-        <div>
-          <h1>AutoBiography Collection</h1>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, nulla incidunt. Mollitia beatae optio a maxime sint, aliquam officiis reiciendis doloribus fugit repellendus reprehenderit atque? Assumenda neque possimus provident incidunt.</p>
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/banner.css'%}">
+{% endblock css %}
+  <section>
+    <div>
+      <div>
+        <div class="mySlides example">
+          <img src="{% static 'images/frontbanner.jfif' %}" style="width:100%"> 
         </div>
-      </div>
-      <div class="main-slide">
-        <!-- <div style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80');"></div>
-        <div style="background-image: url('https://images.unsplash.com/photo-1540390769625-2fc3f8b1d50c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80');"></div>
-        <div style="background-image: url('https://images.unsplash.com/photo-1489493512598-d08130f49bea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80');"></div>
-        <div style="background-image: url('https://images.unsplash.com/photo-1518021964703-4b2030f03085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80');"></div> -->
-        <div><img style="max-width: 100%; height: auto;" src="{% static 'images/banner_img1.jpg' %}" alt=""/></div>
-        <div><img style="max-width: 100%; height: auto;" src="{% static 'images/banner_img2.jpg' %}" alt=""/></div>
-      </div>
-      <div class="controls">
-        <button class="down-button">
-          <i class="fas fa-arrow-down"></i>
-        </button>
-        <button class="up-button">
-          <i class="fas fa-arrow-up"></i>
-        </button>
-      </div>
+        
+        <div class="mySlides example">
+          <img src="{% static 'images/frontbanner2.jpg' %}" style="width:100%">
+        </div>
+        
+        <div class="mySlides example ">
+          <img src="{% static 'images/frontbanner3.jpg' %}" style="width:100%">
+        </div>
+        </div>
+        <br>
+        
+        <div style="text-align:center">
+          <span class="dot" onclick="currentSlide(1)"></span> 
+          <span class="dot" onclick="currentSlide(2)"></span> 
+          <span class="dot" onclick="currentSlide(3)"></span> 
+        </div>
     </div>
   </section>
-  <script>
-    const downButton = document.querySelector('.down-button');
-const upButton = document.querySelector('.up-button');
-const sidebar = document.querySelector('.sidebar');
-const mainSlide = document.querySelector('.main-slide');
-const slidesCount = mainSlide.querySelectorAll('div').length;
-const container = document.querySelector('.container');
+  {% block js %}
+    <script>
+      let slideIndex = 0;
+showSlides();
 
-let activeSlideIndex = 0;
-
-sidebar.style.top = `-${(slidesCount - 1) * 100}vh`;
-
-function changeSlide(direction) {
-if (direction === 'up') {
-  activeSlideIndex++;
-  if (activeSlideIndex === slidesCount) {
-    activeSlideIndex = 0;
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
   }
-}
-
-else if (direction === 'down') {
-  activeSlideIndex--;
-  if (activeSlideIndex < 0) {
-    activeSlideIndex = slidesCount -1;
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
   }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 5000); // Change image every 2 seconds
 }
-
-const height = container.clientHeight;
-
-
-mainSlide.style.transform = `translateY(-${activeSlideIndex * height}px)`;
-sidebar.style.transform = `translateY(${activeSlideIndex * height}px)`;
-}
-
-
-downButton.addEventListener('click', () => {
-changeSlide('down');
-});
-
-upButton.addEventListener('click', () => {
-changeSlide('up');
-});
-
-document.addEventListener('keydown', event => {
-if (event.key === 'ArrowUp') {
-  changeSlide('up');
-}
-else if (event.key === 'ArrowDown') {
-  changeSlide('down');
-}
-});
-</script>
-</body>
-</html>
+    </script>
+  {% endblock js %}

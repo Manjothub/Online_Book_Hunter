@@ -16,7 +16,7 @@ height: 40px;
     <div class="row"> 
         <div class="card" style="width: 100%;">
             <div class="card-body">
-                <h4 class="header-title">User Table</h4>
+                <h4 class="header-title">Students List</h4>
                 <div class="data-tables datatable-dark">
                     <table id="dataTable3" class="text-center">
                         <thead class="text-capitalize">
@@ -41,7 +41,7 @@ height: 40px;
                                 <td>{{student.gender }}</td>
                                 <td class="text-right">
                                     <div class="actions">
-                                       <a href="{% url 'deletestudent' student.id %}" type="submit" class="btn-delete" style="padding: 5px; font-size: 17px;">
+                                       <a href="{% url 'deletestudent' student.id %}" type="submit" class="btn-delete" style="padding: 5px; font-size: 17px; margin: -2px;">
                                        <i class="fas fa-trash"></i>
                                        </a>
                                     </div>
