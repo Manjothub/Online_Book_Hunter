@@ -1,15 +1,10 @@
 {% extends "common/base.html" %}
 {% load static %}
 {% block title %} Book Shop {% endblock title %}
-{% block css %}
-      <link rel="stylesheet" href="{% static 'css/slider_category.css'%}">
-{% endblock css %}
 {% block body %}
 
   <!-- Start Header Area -->
-<header class="header_area sticky-header">
     {% include "includes/header.html" %}
-</header>
 <!-- End Header Area -->
 
 <!-- start banner Area -->
@@ -18,29 +13,28 @@
 <!-- End banner Area -->
 
 <!-- start features Area -->
-<section class="features-area section_gap">
     {% include "includes/features.html" %}
-</section>
 <!-- end features Area -->
 
 <!-- Start category Area -->
-<section class="category-area">
     {% include "includes/category.html" %}
-</section>
 <!-- End category Area -->
 
+<!-- Start products Area -->
+{% include "includes/products.html" %}
+<!-- End products Area -->
 
 <!-- Start exclusive deal Area -->
-<section class="exclusive-deal-area">
     {% include "includes/exclusive.html" %}
-</section>
 <!-- End exclusive deal Area -->
 
 <!-- Start brand Area -->
-<section class="brand-area section_gap">
     {% include "includes/brands.html" %}
-</section>
 <!-- End brand Area -->
+
+<!-- Start related products Area -->
+{% include "includes/related_products.html" %}
+<!-- End related products Area -->
 
 <!-- start footer Area -->
 <footer class="footer-area section_gap">

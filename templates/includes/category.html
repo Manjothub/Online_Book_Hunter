@@ -1,336 +1,66 @@
 {% load static %}
-{% block css %}
-  <link rel="stylesheet" href="{% static 'css/category.css' %}">
-{% endblock css %}
-<div class="container">
-  <!-- Categories -->
-  <!-- <div class="portfolioFilter">
-    <ul class="sort-nav">
-      <li>
-        <a href="#" data-filter="*" class="current">All Categories</a>
-      </li>
-      <li>
-        <a href="#" data-filter=".web">Web</a>
-      </li>
-      <li>
-        <a href="#" data-filter=".shop">E-Commerce</a>
-      </li>
-      <li>
-        <a href="#" data-filter=".z2-mbl">Mobile</a>
-      </li>
-      <li>
-        <a href="#" data-filter=".design">Design</a>
-      </li>
-    </ul>
-  </div> -->
-
-  <div style="clear: both"></div>
-
-  <div class="portfolioContainer">
-    <div class="web">
-      <div class="z-hovr">
-        <img src="https://fpoimg.com/400x400" alt="image" />
-        <div class="z2-client">
-          <h2>The Inside<br />Coup</h2>
-          <a class="showoverlay see_btn" href="#popup1">View More</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="web shop">
-      <div class="z-hovr">
-        <img src="https://fpoimg.com/400x400" alt="image" />
-        <div class="z2-client">
-          <h2>Scottsdale<br />Autism</h2>
-          <a class="showoverlay see_btn" href="#popup2">View More</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="web shop">
-      <div class="z-hovr">
-        <img src="https://fpoimg.com/400x400" alt="image" />
-        <div class="z2-client">
-          <h2>The Inside<br />Coup</h2>
-          <a class="showoverlay see_btn" href="#popup1">View More</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="z2-mbl">
-      <div class="z-hovr">
-        <img src="https://fpoimg.com/400x400" alt="image" />
-        <div class="z2-client design">
-          <h2>Scottsdale<br />Autism</h2>
-          <a class="showoverlay see_btn" href="#popup2">View More</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="z2-mbl">
-      <div class="z-hovr">
-        <img src="https://fpoimg.com/400x400" alt="image" />
-        <div class="z2-client">
-          <h2>The Inside<br />Coup</h2>
-          <a class="showoverlay see_btn" href="#popup1">View More</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="web">
-      <div class="z-hovr">
-        <img src="https://fpoimg.com/400x400" alt="image" />
-        <div class="z2-client">
-          <h2>Scottsdale<br />Autism</h2>
-          <a class="showoverlay see_btn" href="#popup2">View More</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- popups -->
-  <!-- Inside coup -->
-  <div id="popup1" class="overlay">
-    <div class="popup">
-      <a class="close" href="#">&times;</a>
-      <div class="row content">
-        <!-- Slider -->
-        <div class="col-md-6">
-          <div
-            id="carousel-example"
-            class="carousel slide"
-            data-ride="carousel"
-          >
-            <ol class="carousel-indicators">
-              <li
-                data-target="#carousel-example"
-                data-slide-to="0"
-                class="active"
-              ></li>
-              <li data-target="#carousel-example" data-slide-to="1"></li>
-              <li data-target="#carousel-example" data-slide-to="2"></li>
-            </ol>
-
-            <div class="carousel-inner">
-              <div class="item active">
-                <a href="#"
-                  ><img src="https://fpoimg.com/800x800" alt=""
-                /></a>
-                <div class="carousel-caption">
-                  <h3>First Image</h3>
-                  <p>Description</p>
+<section class="category-area">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-12">
+        <div class="row">
+          <div class="col-lg-8 col-md-8">
+            <div class="single-deal">
+              <div class="overlay"></div>
+              <img class="img-fluid w-100" src="{% static 'img/category/c1.jpg' %}" alt="">
+              <a href="img/category/c1.jpg" class="img-pop-up" target="_blank">
+                <div class="deal-details">
+                  <h6 class="deal-title">Sneaker for Sports</h6>
                 </div>
-              </div>
-
-              <div class="item">
-                <a href="#"
-                  ><img src="https://fpoimg.com/800x800" alt=""
-                /></a>
-                <div class="carousel-caption">
-                  <h3>Second image</h3>
-                  <p>Blah blah blah</p>
-                </div>
-              </div>
-
-              <div class="item">
-                <a href="#"
-                  ><img src="https://fpoimg.com/800x800" alt=""
-                /></a>
-                <div class="carousel-caption">
-                  <h3>Third Image</h3>
-                  <p>More stuff here!</p>
-                </div>
-              </div>
+              </a>
             </div>
-
-            <a
-              class="left carousel-control"
-              href="#carousel-example"
-              data-slide="prev"
-            >
-              <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a
-              class="right carousel-control"
-              href="#carousel-example"
-              data-slide="next"
-            >
-              <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
           </div>
-        </div>
-        <!-- Client description -->
-        <div class="col-md-6 client-desc">
-          <h2>The Inside Coup</h2>
-          <div>
-            Small DescriptiLorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Integer posuere erat a ante. Lorem ipsum dolor
-            sit amet, consectetur adipiscing elit. Integer posuere erat a
-            ante.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Integer posuere erat a ante. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Integer posuere erat a ante.on of
-            the client
-          </div>
-
-          <!-- Services list -->
-          <h3>Services</h3>
-          <ul class="popup-list">
-            <li>
-              <a href="">Link 1</a>
-            </li>
-            <li><a href="">Link 2</a></li>
-            <li><a href="">Link 3</a></li>
-          </ul>
-          <!--  Buttons -->
-          <div class="popup-btns">
-            <a href="#" class="pop-btn orng">View Website</a>
-            <a href="#" class="pop-btn blu">Get Quote</a>
-          </div>
-          <!-- Testimonial -->
-          <blockquote>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Integer posuere erat a ante. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. Integer posuere erat a ante.
-            </p>
-            <footer>Buddy Guy, CEO of Canada</footer>
-            <i class="fa fa-quote-right"></i>
-          </blockquote>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scottsdale Autism -->
-  <div id="popup2" class="overlay">
-    <div class="popup">
-      <a class="close" href="#">&times;</a>
-      <div class="row content">
-        <!-- Slider -->
-        <div class="col-md-6">
-          <div
-            id="carousel-example"
-            class="carousel slide"
-            data-ride="carousel"
-          >
-            <ol class="carousel-indicators">
-              <li
-                data-target="#carousel-example"
-                data-slide-to="0"
-                class="active"
-              ></li>
-              <li data-target="#carousel-example" data-slide-to="1"></li>
-              <li data-target="#carousel-example" data-slide-to="2"></li>
-            </ol>
-
-            <div class="carousel-inner">
-              <div class="item active">
-                <a href="#"
-                  ><img src="https://fpoimg.com/800x800" alt=""
-                /></a>
-                <div class="carousel-caption">
-                  <h3>First Image</h3>
-                  <p>Description</p>
+          <div class="col-lg-4 col-md-4">
+            <div class="single-deal">
+              <div class="overlay"></div>
+              <img class="img-fluid w-100" src="{% static 'img/category/c2.jpg' %}" alt="">
+              <a href="img/category/c2.jpg" class="img-pop-up" target="_blank">
+                <div class="deal-details">
+                  <h6 class="deal-title">Sneaker for Sports</h6>
                 </div>
-              </div>
-
-              <div class="item">
-                <a href="#"
-                  ><img src="https://fpoimg.com/800x800" alt=""
-                /></a>
-                <div class="carousel-caption">
-                  <h3>Second image</h3>
-                  <p>Blah blah blah</p>
-                </div>
-              </div>
-
-              <div class="item">
-                <a href="#"
-                  ><img src="https://fpoimg.com/800x800" alt=""
-                /></a>
-                <div class="carousel-caption">
-                  <h3>Third Image</h3>
-                  <p>More stuff here!</p>
-                </div>
-              </div>
+              </a>
             </div>
-
-            <a
-              class="left carousel-control"
-              href="#carousel-example"
-              data-slide="prev"
-            >
-              <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a
-              class="right carousel-control"
-              href="#carousel-example"
-              data-slide="next"
-            >
-              <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <div class="single-deal">
+              <div class="overlay"></div>
+              <img class="img-fluid w-100" src="{% static 'img/category/c3.jpg' %}" alt="">
+              <a href="img/category/c3.jpg" class="img-pop-up" target="_blank">
+                <div class="deal-details">
+                  <h6 class="deal-title">Product for Couple</h6>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-8 col-md-8">
+            <div class="single-deal">
+              <div class="overlay"></div>
+              <img class="img-fluid w-100" src="{% static 'img/category/c4.jpg' %}" alt="">
+              <a href="img/category/c4.jpg" class="img-pop-up" target="_blank">
+                <div class="deal-details">
+                  <h6 class="deal-title">Sneaker for Sports</h6>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
-        <!-- Client description -->
-        <div class="col-md-6 client-desc">
-          <h2>Scottsdale Autism</h2>
-          <div>Small Description of the client</div>
-
-          <!-- Services list -->
-          <h3>Services</h3>
-          <ul class="popup-list">
-            <li>
-              <a href="">Link 1</a>
-            </li>
-            <li><a href="">Link 2</a></li>
-            <li><a href="">Link 3</a></li>
-          </ul>
-          <!--  Buttons -->
-          <div class="popup-btns">
-            <a href="#" class="pop-btn orng">View Website</a>
-            <a href="#" class="pop-btn blu">Get Quote</a>
-          </div>
-          <!-- Testimonial -->
-          <blockquote>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Integer posuere erat a ante. Lorem ipsum dolor sit amet,
-              consectetur adipiscing elit. Integer posuere erat a ante.
-            </p>
-            <footer>Buddy Guy, CEO of Canada</footer>
-          </blockquote>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="single-deal">
+          <div class="overlay"></div>
+          <img class="img-fluid w-100" src="{% static 'img/category/c5.jpg' %}" alt="">
+          <a href="img/category/c5.jpg" class="img-pop-up" target="_blank">
+            <div class="deal-details">
+              <h6 class="deal-title">Sneaker for Sports</h6>
+            </div>
+          </a>
         </div>
       </div>
     </div>
   </div>
-</div>
-{% block js %}
-<script>
-  $(window).load(function () {
-    var $container = $(".portfolioContainer");
-    $container.isotope({
-      filter: "*",
-      animationOptions: {
-        duration: 750,
-        easing: "linear",
-        queue: false,
-      },
-    });
-
-    $(".portfolioFilter a").click(function () {
-      $(".portfolioFilter .current").removeClass("current");
-      $(this).addClass("current");
-
-      var selector = $(this).attr("data-filter");
-      $container.isotope({
-        filter: selector,
-        animationOptions: {
-          duration: 750,
-          easing: "linear",
-          queue: false,
-        },
-      });
-      return false;
-    });
-  });
-</script>
-{% endblock js %}
+</section>

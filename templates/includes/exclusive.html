@@ -1,74 +1,72 @@
 {% load static %}
-
-<div class="container-fluid">
-    <div class="row justify-content-center align-items-center">
-        <div class="col-lg-6 no-padding exclusive-left">
-            <div class="row clock_sec clockdiv" id="clockdiv">
-                <div class="col-lg-12">
-                    <h1>Exclusive Hot Deal Ends Soon!</h1>
-                    <p>Who are in extremely love with eco friendly system.</p>
-                </div>
-                <div class="col-lg-12">
-                    <div class="row clock-wrap">
-                        <div class="col clockinner1 clockinner">
-                            <h1 class="days">150</h1>
-                            <span class="smalltext">Days</span>
-                        </div>
-                        <div class="col clockinner clockinner1">
-                            <h1 class="hours">23</h1>
-                            <span class="smalltext">Hours</span>
-                        </div>
-                        <div class="col clockinner clockinner1">
-                            <h1 class="minutes">47</h1>
-                            <span class="smalltext">Mins</span>
-                        </div>
-                        <div class="col clockinner clockinner1">
-                            <h1 class="seconds">59</h1>
-                            <span class="smalltext">Secs</span>
-                        </div>
+<section class="exclusive-deal-area">
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 no-padding exclusive-left">
+                <div class="row clock_sec clockdiv" id="clockdiv">
+                    <div class="col-lg-12">
+                        <h1>Exclusive Hot Deal Ends Soon!</h1>
+                        <p>Who are in extremely love with eco friendly system.</p>
                     </div>
-                </div>
-            </div>
-            <a href="{% url 'viewbookscategory' 0  %}" class="primary-btn">Shop Now</a>
-        </div>
-        <div class="col-lg-6 no-padding exclusive-right">
-            <div class="active-exclusive-product-slider">
-                
-
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                   
-                    <ol class="carousel-indicators">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                        <li data-target="#myCarousel" data-slide-to="2"></li>
-                        <li data-target="#myCarousel" data-slide-to="3"></li>
-                        <li data-target="#myCarousel" data-slide-to="4"></li>
-                    </ol>   
-                    
-                    <div class="carousel-inner">	
-                        {% for book in books|slice:":5" %}	
-                        {% if forloop.counter == 1 %}
-                        <div class="carousel-item active">
-                        {% else %}
-                        <div class="carousel-item">
-                        {% endif %}
-                            <div class="img-box"><img src="{{book.book_image.url}}" alt=""></div>
-                            <div class="price" style="margin-left: -80px">
-                                <h6 class="l-through" style="margin-top: 75%;">{{book.publisher}}</h6>
-                                <p class="l-through">{{book.book_name}}</p>
+                    <div class="col-lg-12">
+                        <div class="row clock-wrap">
+                            <div class="col clockinner1 clockinner">
+                                <h1 class="days">150</h1>
+                                <span class="smalltext">Days</span>
+                            </div>
+                            <div class="col clockinner clockinner1">
+                                <h1 class="hours">23</h1>
+                                <span class="smalltext">Hours</span>
+                            </div>
+                            <div class="col clockinner clockinner1">
+                                <h1 class="minutes">47</h1>
+                                <span class="smalltext">Mins</span>
+                            </div>
+                            <div class="col clockinner clockinner1">
+                                <h1 class="seconds">59</h1>
+                                <span class="smalltext">Secs</span>
                             </div>
                         </div>
-                        {% endfor %}	
                     </div>
-                    
-                    <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
+                </div>
+                <a href="" class="primary-btn">Shop Now</a>
+            </div>
+            <div class="col-lg-6 no-padding exclusive-right">
+                <div class="active-exclusive-product-slider">
+                    <!-- single exclusive carousel -->
+                    <div class="single-exclusive-slider">
+                        <img class="img-fluid" src="{% static 'img/product/e-p1.png' %}" alt="">
+                        <div class="product-details">
+                            <div class="price">
+                                <h6>$150.00</h6>
+                                <h6 class="l-through">$210.00</h6>
+                            </div>
+                            <h4>addidas New Hammer sole
+                                for Sports person</h4>
+                            <div class="add-bag d-flex align-items-center justify-content-center">
+                                <a class="add-btn" href=""><span class="ti-bag"></span></a>
+                                <span class="add-text text-uppercase">Add to Bag</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single exclusive carousel -->
+                    <div class="single-exclusive-slider">
+                        <img class="img-fluid" src="{% static 'img/product/e-p1.png' %}" alt="">
+                        <div class="product-details">
+                            <div class="price">
+                                <h6>$150.00</h6>
+                                <h6 class="l-through">$210.00</h6>
+                            </div>
+                            <h4>addidas New Hammer sole
+                                for Sports person</h4>
+                            <div class="add-bag d-flex align-items-center justify-content-center">
+                                <a class="add-btn" href=""><span class="ti-bag"></span></a>
+                                <span class="add-text text-uppercase">Add to Bag</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>

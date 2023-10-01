@@ -1,51 +1,50 @@
 {% load static %}
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/banner.css'%}">
-{% endblock css %}
-  <section>
-    <div>
-      <div>
-        <div class="mySlides example">
-          <img src="{% static 'images/frontbanner.jfif' %}" style="width:100%"> 
+<section class="banner-area">
+  <div class="container">
+    <div class="row fullscreen align-items-center justify-content-start">
+      <div class="col-lg-12">
+        <div class="active-banner-slider owl-carousel">
+          <!-- single-slide -->
+          <div class="row single-slide align-items-center d-flex">
+            <div class="col-lg-5 col-md-6">
+              <div class="banner-content">
+                <h1>Nike New <br>Collection!</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                <div class="add-bag d-flex align-items-center">
+                  <a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+                  <span class="add-text text-uppercase">Add to Bag</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="banner-img">
+                <img class="img-fluid" src="{% static 'img/banner/banner-img.png'  %}" alt="">
+              </div>
+            </div>
+          </div>
+          <!-- single-slide -->
+          <div class="row single-slide">
+            <div class="col-lg-5">
+              <div class="banner-content">
+                <h1>Nike New <br>Collection!</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                <div class="add-bag d-flex align-items-center">
+                  <a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+                  <span class="add-text text-uppercase">Add to Bag</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="banner-img">
+                <img class="img-fluid" src="{% static 'img/banner/banner-img.png' %}" alt="">
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div class="mySlides example">
-          <img src="{% static 'images/frontbanner2.jpg' %}" style="width:100%">
-        </div>
-        
-        <div class="mySlides example ">
-          <img src="{% static 'images/frontbanner3.jpg' %}" style="width:100%">
-        </div>
-        </div>
-        <br>
-        
-        <div style="text-align:center">
-          <span class="dot" onclick="currentSlide(1)"></span> 
-          <span class="dot" onclick="currentSlide(2)"></span> 
-          <span class="dot" onclick="currentSlide(3)"></span> 
-        </div>
+      </div>
     </div>
-  </section>
-  {% block js %}
-    <script>
-      let slideIndex = 0;
-showSlides();
-
-function showSlides() {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}    
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
-  setTimeout(showSlides, 5000); // Change image every 2 seconds
-}
-    </script>
-  {% endblock js %}
+  </div>
+</section>
+<!-- End banner Area -->
