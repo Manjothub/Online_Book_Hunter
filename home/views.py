@@ -15,7 +15,8 @@ from django.db.models import Avg
 def INDEX(request):
     books = Book.objects.all()
     context ={
-        'books':books
+        'books':books,
+
     }
     return render(request,'user/index.html',context)
 
@@ -57,11 +58,7 @@ def DOLOGIN(request):
                 elif user_type =='2':
                     cuser=CustomUser.objects.get(username=username)
                     stu=Student.objects.get(user=cuser)
-                    if stu.is_email_verfied:
-                        return redirect('dashboardstudent')
-                    else:
-                        messages.warning(request,'Verify your Email First')
-                        return redirect('dashboardstudent')
+                    return redirect('dashboardstudent')
         else:
                     messages.error(request,"Invalid Credentials")
                     return redirect('loginpage')
@@ -348,11 +345,6 @@ def ISSUEBOOK(request):
     return render(request,'admin/issue_book.html',context)
 
 
-
-
-
-
-
 def BOOKVIEWCATEGORY(request,items):
     if items == 0:
         categories = BookCategory.objects.select_related().all()
@@ -446,7 +438,6 @@ def STUDENTREGISTER(request):
         if student is not None:
             student.save()
             messages.success(request,'Account Created Successfully')
-            messages.success(request,'Email has been send to your mail for verification')
             return redirect('loginpage')
         else:
             messages.error(request,'Some error occured')

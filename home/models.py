@@ -70,8 +70,6 @@ class Book(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    is_email_verfied = models.BooleanField(default = False)
-    email_token = models.CharField(max_length=100,null=True,blank=True)
     student_dob = models.DateField(auto_now_add=False)
     gender= models.CharField(max_length=10)
     branch = models.CharField(max_length=10)
@@ -81,16 +79,7 @@ class Student(models.Model):
 
     def __str__(self):
         return str(self.user) + " ["+str(self.branch)+']' + " ["+str(self.roll_no)+']'
-    
-@receiver(post_save, sender=Student)
-def send_token(sender, instance, created, **kwargs):
-        if created:
-            token=uuid.uuid4()
-            useremail = instance.user.email
-            instance.email_token = token   
-            student_verification_token(useremail,token)
-    
-    
+            
 class RequestBook(models.Model):
     student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
     book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)

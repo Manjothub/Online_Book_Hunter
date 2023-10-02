@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg navbar-light main_box">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <a class="navbar-brand logo_h" href="#"><img src="{% static 'img/logo.png' %}" alt=""></a>
+            <a class="navbar-brand logo_h" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -23,8 +23,12 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'viewbookscategory' 0  %}">Shop by Category</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'loginpage' %}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contactpage' %}">Contact</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'doLogout' %}">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'loginpage' %}">Login</a></li>
+                    {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
