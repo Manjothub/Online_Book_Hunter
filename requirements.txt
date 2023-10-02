@@ -2,6 +2,7 @@ asgiref==3.7.2
 distlib==0.3.7
 Django==4.2.5
 filelock==3.12.4
+Pillow==10.0.1
 platformdirs==3.10.0
 sqlparse==0.4.4
 tzdata==2023.3
