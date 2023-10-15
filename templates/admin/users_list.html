@@ -16,32 +16,28 @@ height: 40px;
     <div class="row"> 
         <div class="card" style="width: 100%;">
             <div class="card-body">
-                <h4 class="header-title">Students List</h4>
+                <h4 class="header-title">Customer List</h4>
                 <div class="data-tables datatable-dark">
                     <table id="dataTable3" class="text-center">
                         <thead class="text-capitalize">
                             <tr>
-                                <th>Student Name</th>
-                                <th>Student branch</th>
-                                <th>Student Roll number</th>
-                                <th>Student DOB</th>
-                                <th>Student Phone</th>
+                                <th>Customer Name</th>
+                                <th>Customer DOB</th>
+                                <th>Customer Phone</th>
                                 <th>Gender</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for student in students %}
+                            {% for customer in customers %}
                             <tr>
-                                <td>{{student.user.first_name }}&nbsp;{{student.user.last_name }}</td>
-                                <td>{{student.branch }}</td>
-                                <td>{{student.roll_no }}</td>
-                                <td>{{student.student_dob }}</td>
-                                <td>{{student.phone }}</td>
-                                <td>{{student.gender }}</td>
+                                <td>{{customer.user.first_name }}&nbsp;{{customer.user.last_name }}</td>
+                                <td>{{customer.customer_dob }}</td>
+                                <td>{{customer.phone }}</td>
+                                <td>{{customer.gender }}</td>
                                 <td class="text-right">
                                     <div class="actions">
-                                       <a href="{% url 'deletestudent' student.id %}" type="submit" class="btn-delete" style="padding: 5px; font-size: 17px; margin: -2px;">
+                                       <a href="{% url 'deletestudent' customer.id %}" type="submit" class="btn-delete" style="padding: 5px; font-size: 17px; margin: -2px;">
                                        <i class="fas fa-trash"></i>
                                        </a>
                                     </div>

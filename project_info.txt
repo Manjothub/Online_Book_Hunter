@@ -1,0 +1,8 @@
+Now i am changing this to student specific to customer specific
+
+features i will add :
+
+1 customer add to cart
+2 customer can do send request to buy
+3 now admin can be also created/ registred simply they can add their shop name and select the option as vendor or customer
+4 payments can be done by customer admin can send the payment link by checking the request

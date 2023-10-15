@@ -23,13 +23,13 @@ class BookCategoryAdmin(admin.ModelAdmin):
 admin.site.register(BookAuthor)
 
 
-admin.site.register(Student)
+admin.site.register(Customer)
 
 admin.site.register(IssuedBook)
 
 @admin.register(RequestBook)
 class RequestBookAdmin(admin.ModelAdmin):
-    list_display = ['id','student_name','book_name']
+    list_display = ['id','customer_name','book_name']
     
 admin.site.register(BookReview)
 admin.site.register(BookComment)

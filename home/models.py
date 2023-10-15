@@ -11,7 +11,7 @@ import uuid
 class CustomUser(AbstractUser):
     USER ={
         (1,'ADMIN'),
-        (2,'STUDENT'),
+        (2,'CUSTOMER'),
     }
     user_type = models.CharField(choices=USER,max_length=50,default=1)
     profile_pic = models.ImageField(upload_to='uploads/profile_pic/')
@@ -68,36 +68,34 @@ class Book(models.Model):
     
     
 
-class Student(models.Model):
+class Customer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    student_dob = models.DateField(auto_now_add=False)
+    customer_dob = models.DateField(auto_now_add=False)
     gender= models.CharField(max_length=10)
-    branch = models.CharField(max_length=10)
-    roll_no = models.CharField(max_length=3, blank=True)
     phone = models.CharField(max_length=10, blank=True)
     image = models.ImageField(upload_to="uploads/profile-pic/")
 
     def __str__(self):
-        return str(self.user) + " ["+str(self.branch)+']' + " ["+str(self.roll_no)+']'
+        return str(self.user) 
             
 class RequestBook(models.Model):
-    student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
+    customer_name= models.ForeignKey(Customer, on_delete=models.CASCADE,null=True)
     book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
     request_status = models.IntegerField(null=True,default=0)
     upto_date = models.DateField(auto_now_add=False,null=True)
     button_value=models.BooleanField(default=False)
     
     def __str__(self):
-        return str(self.student_name)
+        return str(self.customer_name)
     
 
 class IssuedBook(models.Model):
-    student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
+    customer_name= models.ForeignKey(Customer, on_delete=models.CASCADE,null=True)
     book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
     issued_date = models.DateField(auto_now=True)
     date_return = models.DateField(auto_now_add=False,null=True)
     def __str__(self):
-        return str(self.book_name) + str(self.student_name)
+        return str(self.book_name) + str(self.customer_name)
 
 class BookReview(models.Model):
     RATING_CHOICES = (
@@ -108,18 +106,18 @@ class BookReview(models.Model):
         (5, '⭐⭐⭐⭐⭐'),
     )
     book_name= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
-    student_name= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
+    customer_name= models.ForeignKey(Customer, on_delete=models.CASCADE,null=True)
     pub_date = models.DateTimeField(auto_now=True)
     rating = models.IntegerField(choices=RATING_CHOICES)
     mesage = models.TextField(null=True)
     def __str__(self):
-        return str(self.student_name) + str(self.rating)
+        return str(self.customer_name) + str(self.rating)
     
 
 class BookComment(models.Model):
     bookname= models.ForeignKey(Book,on_delete=models.CASCADE,null=True)
-    studentname= models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
+    customer_name= models.ForeignKey(Customer, on_delete=models.CASCADE,null=True)
     cmnt_date = models.DateTimeField(auto_now=True)
     comment = models.TextField(null=True)
     def __str__(self):
-        return str(self.studentname) + str(self.comment)
+        return str(self.customer_name) + str(self.comment)

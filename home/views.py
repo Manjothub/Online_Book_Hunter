@@ -23,21 +23,21 @@ def INDEX(request):
 @login_required(login_url = 'login')
 def ADMIN_DASHBOARD(request):
     user = CustomUser.objects.get(id=request.user.id)
-    students = Student.objects.all().count()
+    customers = Customer.objects.all().count()
     booksdata = Book.objects.all().count()
     requestbook = RequestBook.objects.all().count()
     issuedbookdata = IssuedBook.objects.all().count()
-    student_male = Student.objects.filter(gender = 'Male').count()
-    student_female = Student.objects.filter(gender = 'Female').count()
+    customer_male = Customer.objects.filter(gender = 'Male').count()
+    customer_female = Customer.objects.filter(gender = 'Female').count()
     categorieslabels = BookCategory.objects.all().count()
     context ={
         'user':user,
-        'students':students,
+        'customers':customers,
         'booksdata':booksdata,
         'requestbook':requestbook,
         'issuedbookdata':issuedbookdata,
-        'student_male':student_male,
-        'student_female':student_female,
+        'customer_male':customer_male,
+        'customer_female':customer_female,
         'categorieslabels':categorieslabels
     }
     return render(request,'admin/homepage.html',context)
@@ -57,7 +57,7 @@ def DOLOGIN(request):
                     return redirect('dashboardadmin')
                 elif user_type =='2':
                     cuser=CustomUser.objects.get(username=username)
-                    stu=Student.objects.get(user=cuser)
+                    stu=Customer.objects.get(user=cuser)
                     return redirect('dashboardstudent')
         else:
                     messages.error(request,"Invalid Credentials")
@@ -220,15 +220,15 @@ def DELETECATEGORIES(request,id):
 
 
 def USERLIST(request):
-    students = Student.objects.all()
+    customers = Customer.objects.all()
     context ={
-        'students':students
+        'customers':customers
     }
     return render(request,'admin/users_list.html',context)
 
-def DELETESTUDENT(request,id):
-    stud = Student.objects.get(id=id)
-    stud.delete()
+def DELETECUSTOMER(request,id):
+    cust = Customer.objects.get(id=id)
+    cust.delete()
     return redirect('userlist')
 
 @login_required(login_url = 'login')
@@ -310,24 +310,24 @@ def DELETEBOOKS(request,id):
 @login_required(login_url = 'login')
 def ISSUEBOOK(request):
     books = Book.objects.all()
-    students = Student.objects.all()
+    customers = Customer.objects.all()
     context ={
         'books':books,
-        'students':students
+        'customers':customers
     }
 
     if request.method == 'POST':
         book_name=request.POST.get('book_name')
         author_name=request.POST.get('author')
-        student_id= request.POST.get('student_id')
+        customer_id= request.POST.get('customer_id')
         isbn_number = request.POST.get('isbn')
         book_volume = request.POST.get('volume')
         book_category = request.POST.get('category')
         sub_category = request.POST.get('sub_category')
         books = Book.objects.get(id=book_name)
-        student = Student.objects.get(id=student_id)
+        customer = Customer.objects.get(id=customer_id)
         issuebook = IssuedBook(
-            student_name =student,
+            customer_name =customer,
             book_name =books,
             isbn = isbn_number,
             Volume = book_volume,
@@ -378,8 +378,8 @@ def BOOKDETAIL(request,id):
     products = Book.objects.get(id=id)
     if request.user.is_authenticated:
         user = request.user
-        stu=Student.objects.get(user=user)
-        show=RequestBook.objects.filter(Q(book_name=products) & Q(student_name=stu))
+        stu=Customer.objects.get(user=user)
+        show=RequestBook.objects.filter(Q(book_name=products) & Q(customer_name=stu))
         cmnt = BookComment.objects.filter(bookname=products)
         form = UserReviewForm()
         userreview = BookReview.objects.filter(book_name=products)
@@ -398,18 +398,15 @@ def BOOKDETAIL(request,id):
 
 
 
-def STUDENTREGISTER(request):
+def CUSTOMERREGISTER(request):
     if request.method == "POST":
         username = request.POST.get('username')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
-        branch = request.POST.get('branch')
         date_birth=request.POST.get('dob_student')
         gender=request.POST.get('gender')
-        roll_no = request.POST.get('roll_no')
-        image = request.FILES.get('image')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
@@ -429,14 +426,14 @@ def STUDENTREGISTER(request):
                 last_name=last_name,
                 username=username,
                 email=email,
-                profile_pic=image,
                 user_type=2
             )    
             user.set_password(password)
             user.save()
-        student = Student.objects.create(user=user, phone=phone, branch=branch,student_dob=date_birth,gender=gender,roll_no=roll_no, image=image)
-        if student is not None:
-            student.save()
+        customer = Customer.objects.create(user=user, phone=phone,customer_dob=date_birth,gender=gender)
+        print(customer)
+        if customer is not None:
+            customer.save()
             messages.success(request,'Account Created Successfully')
             return redirect('loginpage')
         else:
@@ -445,12 +442,12 @@ def STUDENTREGISTER(request):
     return render(request, "user/student_registration.html")
 
 @login_required(login_url = 'login')
-def STUDENT_DASHBOARD(request):
+def CUSTOMER_DASHBOARD(request):
     user = CustomUser.objects.get(id=request.user.id)
     books = Book.objects.all().count()
-    students = Student.objects.get(user=user)
-    issuedbooks = IssuedBook.objects.filter(student_name =students).count()
-    requestedbook = RequestBook.objects.filter(student_name =students).count()
+    customer = Customer.objects.get(user=user)
+    issuedbooks = IssuedBook.objects.filter(customer_name =customer).count()
+    requestedbook = RequestBook.objects.filter(customer_name =customer).count()
     context ={
         "user":user,
         'books':books,
@@ -479,11 +476,11 @@ def DELETEISSUEDBOOK(request,id):
     return redirect('issuedbooks')
 
 @login_required(login_url = 'login')
-def STUDENTISSUEDBOOKS(request):
+def CUSTOMERISSUEDBOOKS(request):
     user = request.user
-    student = Student.objects.filter(user=user)
-    issuedBooks = IssuedBook.objects.filter(student_name=student[0])
-    issuedBooksdata = IssuedBook.objects.filter(student_name=student[0]).count()
+    customer = Customer.objects.filter(user=user)
+    issuedBooks = IssuedBook.objects.filter(customer_name=customer[0])
+    issuedBooksdata = IssuedBook.objects.filter(customer_name=customer[0]).count()
     context={
         'issuebooks':issuedBooks,
         'issuedata' :issuedBooksdata
@@ -494,11 +491,11 @@ def BOOKREQUEST(request,id):
     if request.method == 'POST':
             if request.user.is_authenticated:
                 user = request.user
-                student = Student.objects.get(user=user)
+                customer = Customer.objects.get(user=user)
                 book = Book.objects.get(id=id)
                 date = request.POST.get('uptodate')
                 bookrequest = RequestBook(
-                    student_name = student,
+                    customer_name = customer,
                     book_name = book,
                     upto_date =date,
                     button_value=True
@@ -519,22 +516,21 @@ def VIEWREQUESTEDBOOKS(request):
 
 
 @login_required(login_url = 'login')
-def STUDENTAPPROVEBOOK(request,id):
+def CUSTOMERAPPROVEBOOK(request,id):
     bookrequests = RequestBook.objects.get(id=id)
-    print(bookrequests)
     bookrequests.request_status = 1
     bookrequests.save()
     if bookrequests.request_status == 1:
-        name = bookrequests.student_name
+        name = bookrequests.customer_name
         book = bookrequests.book_name
         date = bookrequests.upto_date
-        issue = IssuedBook(student_name =name,book_name=book,date_return=date)
+        issue = IssuedBook(customer_name=name,book_name=book,date_return=date)
         issue.save()
         messages.success(request,'Book Issued ')
     return redirect('requestedbooks')
 
 @login_required(login_url = 'login')
-def STUDENTDISAPPROVEBOOK(request,id):
+def CUSTOMERDISAPPROVEBOOK(request,id):
     bookrequests = RequestBook.objects.get(id=id)
     bookrequests.request_status = 2
     bookrequests.save()
@@ -543,25 +539,25 @@ def STUDENTDISAPPROVEBOOK(request,id):
 
 @login_required(login_url = 'login')
 def BOOKREQUESTHISTORY(request):
-    student = Student.objects.filter(user=request.user.id)
-    for i in student:
-        student_id = i.id
-        student_book_request_history = RequestBook.objects.filter(student_name = student_id)
+    customer = Customer.objects.filter(user=request.user.id)
+    for i in customer:
+        customer_id = i.id
+        customer_book_request_history = RequestBook.objects.filter(customer_name = customer_id)
         context={
-            'student_book_request_history':student_book_request_history
+            'customer_book_request_history':customer_book_request_history
         }
     return render(request,'user/request_books_history.html',context)
 
-def STUDENTPROFILE(request):
+def CUSTOMERPROFILE(request):
     return render(request,'user/user_profile.html')
 
-def STUDENTPROFILEUPDATE(request):
+def CUSTOMERPROFILEUPDATE(request):
     if request.method == 'POST':
         profilepic = request.FILES.get('profilepic')
         firstname = request.POST.get('fname')
         lastname = request.POST.get('lname')
         password = request.POST.get('password')
-        studentdob = request.POST.get('dateofbirth')
+        customerdob = request.POST.get('dateofbirth')
         branch = request.POST.get('branch')
         roll_no = request.POST.get('rollnum')
         phone_no = request.POST.get('phonenum')
@@ -573,38 +569,28 @@ def STUDENTPROFILEUPDATE(request):
             if password != None and password != "":
                 customuser.set_password(password)
             customuser.save()
-            student = Student.objects.get(user = customuser)
-            student.user = customuser
-            student.student_dob = studentdob
-            student.branch = branch
-            student.roll_no = roll_no
-            student.phone = phone_no
-            student.save()
+            customer = Customer.objects.get(user = customuser)
+            customer.user = customuser
+            customer.customer_dob = customerdob
+            customer.branch = branch
+            customer.roll_no = roll_no
+            customer.phone = phone_no
+            customer.save()
             messages.success(request,"Your Profile Updated Successfully")
             return redirect("studentprofile")
         except:
             messages.error(request,"Fail to update your Profile")
     return render(request,'user/edit_user_profile.html')
 
-def VERIFYSTUDENT(request,token):
-    try:
-        students = Student.objects.get(email_token=token)
-        students.is_email_verfied = True
-        students.save()
-        messages.success(request,'User Verfied')
-        return redirect('loginpage')
-    except Exception as e:
-        return render(request,'common/errorpage404.html')
-
 def ADDCOMMENT(request,id):
     if request.method =='POST':
         user = request.user
-        student = Student.objects.get(user=user)
+        customer = Customer.objects.get(user=user)
         book = Book.objects.get(id=id)
         msg = request.POST.get('message')
         cmnt = BookComment(
             bookname = book,
-            studentname = student,
+            customername = customer,
             comment = msg
         )
         cmnt.save()
@@ -616,14 +602,14 @@ def ADDCOMMENT(request,id):
 def ADDREVIEW(request,id):
     if request.method =='POST':
         user = request.user
-        student = Student.objects.get(user=user)
+        customer = Customer.objects.get(user=user)
         book = Book.objects.get(id=id)
         reviewmsg= request.POST.get('reviewmsg')
         form = UserReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit = False)
             review.book_name =book
-            review.student_name = student
+            review.customer_name = customer
             review.mesage = reviewmsg
             review.save()
             messages.success(request,'Review Added Sucessfully')

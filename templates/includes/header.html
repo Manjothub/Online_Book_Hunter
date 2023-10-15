@@ -17,11 +17,7 @@
                 <ul class="nav navbar-nav menu_nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
                     <li class="nav-item submenu dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                            aria-haspopup="true" aria-expanded="false">Books</a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item"><a class="nav-link" href="{% url 'viewbookscategory' 0  %}">Shop by Category</a></li>
-                        </ul>
+                        <a class="nav-link" href="{% url 'viewbookscategory' 0  %}">Books</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'contactpage' %}">Contact</a></li>
                     {% if user.is_authenticated %}

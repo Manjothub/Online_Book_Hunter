@@ -7,13 +7,9 @@
             <!-- Logo -->
             <!-- ============================================================== -->
             <a class="navbar-brand" href="{% url 'dashboardstudent' %}">
-                <b class="logo-icon ps-2">
-                    <!-- <img src="{% static 'studentdashboard/assets/images/logo-icon.png' %}" alt="homepage" class="light-logo" /> -->
-                </b>
                 <span class="logo-text">
-                    <img src="{% static 'img/dshlogo.png' %}" alt="homepage" style="height: 7vh; width: 120%;"/>
+                    <img src="{% static 'img/logo.png' %}" alt="">
                 </span>
-               
             </a>
            
             <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
@@ -33,7 +29,7 @@
                        {% if user.profile_pic == '' %} 
                         <img src="{% static 'studentdashboard/assets/images/users/1.jpg' %}" alt="user" class="rounded-circle" width="31">
                         {% else %}
-                        <img src="{{user.profile_pic.url}}" alt="user" class="rounded-circle" width="31">
+                        <a href="{% url 'studentprofile' %}"><img src="{{user.profile_pic.url}}" alt="user" class="rounded-circle" width="31"></a>
                         {% endif %}
                 </li>
 
